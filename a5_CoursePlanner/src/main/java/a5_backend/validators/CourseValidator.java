@@ -1,9 +1,9 @@
-package validators;
+package a5_backend.validators;
 
-import model.Section;
+import a5_backend.Model.CourseSection;
 
 public class CourseValidator {
-    public boolean validateCourse(Section previousSection, Section section) {
+    public boolean validateCourse(CourseSection previousSection, CourseSection section) {
         if (previousSection.department == section.department
             && previousSection.courseNumber == section.courseNumber
             && previousSection.semester == section.semester

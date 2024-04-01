@@ -21,13 +21,13 @@
 
     <h2>Add Watcher</h2>
     <p>
-        <select v-model="selectedDept" class="dropdown">
+        <select v-a5_backend.model="selectedDept" class="dropdown">
             <option v-for="option in departments" :value="option">
                 {{ option.name }}
             </option>
         </select>
 
-        <select v-if="selectedDept" v-model="selectedCourse" class="dropdown">
+        <select v-if="selectedDept" v-a5_backend.model="selectedCourse" class="dropdown">
             <option v-for="option in courses" :value="option">
                 {{ option.catalogNumber }}
             </option>
@@ -39,13 +39,13 @@
     </p>
     <div v-if="selectedCourse">
         <h3>New Offering / Section</h3>
-        <input v-model="new_semester" placeholder="Semester"/>
-        <input v-model="new_location" placeholder="Location"/>
-        <input v-model="new_instructor" placeholder="Instructor"/>
+        <input v-a5_backend.model="new_semester" placeholder="Semester"/>
+        <input v-a5_backend.model="new_location" placeholder="Location"/>
+        <input v-a5_backend.model="new_instructor" placeholder="Instructor"/>
         <br/>
-        <input v-model="new_component" placeholder="Component"/>
-        <input v-model="new_enrollmentTotal" placeholder="Enrollment"/>
-        <input v-model="new_enrollmentCap" placeholder="Cap"/>
+        <input v-a5_backend.model="new_component" placeholder="Component"/>
+        <input v-a5_backend.model="new_enrollmentTotal" placeholder="Enrollment"/>
+        <input v-a5_backend.model="new_enrollmentCap" placeholder="Cap"/>
 
         <button type="button" v-on:click="makeNewSection()">
             Create Section
