@@ -10,7 +10,6 @@ import java.util.List;
 public class CourseSection implements Section, Comparator<CourseSection> {
 
     private final List<Component> componentList = new ArrayList<>();
-
     public String department;
     public int courseNumber;
     public String semester;
