@@ -1,12 +1,10 @@
-package a5_backend.Model.CourseAttributes;
+package a5_backend.Model.CourseInterfaces;
 
 public interface Section {
 
-    String getSemester();
+    int getSemester();
 
     String getLocation();
-
-    int parseSemester();
 
     int getTotalLecEnrollment();
 
@@ -14,7 +12,7 @@ public interface Section {
 
     int getTotalEnrollmentCapacity();
 
-    void addNewComponent(Component newComponent);
+    void addNewComponent(ClassComponent newComponent);
 
     void printAllComponents();
 

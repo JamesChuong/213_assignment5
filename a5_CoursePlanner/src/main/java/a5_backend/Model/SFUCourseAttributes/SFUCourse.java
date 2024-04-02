@@ -1,7 +1,7 @@
-package a5_backend.Model;
+package a5_backend.Model.SFUCourseAttributes;
 
-import a5_backend.Model.CourseAttributes.Component;
-import a5_backend.Model.CourseAttributes.Course;
+import a5_backend.Model.CourseInterfaces.ClassComponent;
+import a5_backend.Model.CourseInterfaces.Course;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,33 +10,33 @@ public class SFUCourse implements Course {
 
     private final String departmentName;
 
-    private final int catalogNumber;
+    private final String catalogNumber;
 
     private final List<CourseSection> courseSections = new ArrayList<>(){};
 
-    public SFUCourse(String departmentName, int catalogNumber){
+    public SFUCourse(String departmentName, String catalogNumber){
         this.departmentName = departmentName;
         this.catalogNumber =  catalogNumber;
     }
 
-    public static SFUCourse createCourseWithComponent(Component newComponent){
+    public static SFUCourse createCourseWithComponent(ClassComponent newComponent){
         SFUCourse newCourse = new SFUCourse(newComponent.getDepartmentName(), newComponent.getCatalogNumber());
         newCourse.addNewComponent(newComponent);
         return newCourse;
     }
 
     @Override
-    public void addNewComponent(Component newComponent) {
+    public void addNewComponent(ClassComponent newComponent) {
         //Check if the component belongs to any section stored
         boolean componentIsPartOfSection = courseSections.stream()
-                .anyMatch(section -> section.semester.equals(newComponent.getSemester())
+                .anyMatch( section -> section.semester == newComponent.getSemester()
                         && section.location.equals(newComponent.getLocation())
-                        && section.instructor.equals(newComponent.getInstructor()));
+                        && section.instructor.equals(newComponent.getInstructor()) );
         if(componentIsPartOfSection){
             courseSections.stream()
-                    .filter(section -> section.semester.equals(newComponent.getSemester())
-                            && section.semester.equals(newComponent.getLocation())
-                            && section.instructor.equals(newComponent.getInstructor()))
+                    .filter( section -> section.semester == newComponent.getSemester()
+                            && section.location.equals(newComponent.getLocation())
+                            && section.instructor.equals(newComponent.getInstructor()) )
                     .forEach(section -> section.addNewComponent(newComponent));
         } else{     //If the component doesn't belong to any section stored, create a new one and add it
             courseSections.add(CourseSection.CreateNewSectionWithComponent(newComponent));
@@ -52,7 +52,7 @@ public class SFUCourse implements Course {
     }
 
     @Override
-    public int getCatalogNumber() {
+    public String getCatalogNumber() {
         return catalogNumber;
     }
 }

@@ -1,7 +1,7 @@
-package a5_backend.Model;
+package a5_backend.Model.SFUCourseAttributes;
 
-import a5_backend.Model.CourseAttributes.Component;
-import a5_backend.Model.CourseAttributes.Section;
+import a5_backend.Model.CourseInterfaces.ClassComponent;
+import a5_backend.Model.CourseInterfaces.Section;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,20 +9,20 @@ import java.util.List;
 
 public class CourseSection implements Section, Comparator<CourseSection> {
 
-    private final List<Component> componentList = new ArrayList<>();
+    private final List<ClassComponent> componentList = new ArrayList<>();
 
     public String department;
-    public int courseNumber;
-    public String semester;
+    public String catalogNumber;
+    public int semester;
     public String location;
     public String instructor;
 
     public CourseSection(){}
 
-    public static CourseSection CreateNewSectionWithComponent(Component newComponent){
+    public static CourseSection CreateNewSectionWithComponent(ClassComponent newComponent){
         CourseSection newSection = new CourseSection();
         newSection.department = newComponent.getDepartmentName();
-        newSection.courseNumber = newComponent.getCatalogNumber();
+        newSection.catalogNumber = newComponent.getCatalogNumber();
         newSection.semester = newComponent.getSemester();
         newSection.location = newComponent.getLocation();
         newSection.instructor = newComponent.getInstructor();
@@ -30,18 +30,13 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     }
 
     @Override
-    public String getSemester() {
+    public int getSemester() {
         return semester;
     }
 
     @Override
     public String getLocation() {
         return location;
-    }
-
-    @Override
-    public int parseSemester() {
-        return 0;
     }
 
     @Override
@@ -54,7 +49,7 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     public int getTotalLabEnrollment() {
         return componentList.stream()
                 .filter(component -> !component.getComponentCode().equals("LEC") )
-                .mapToInt(Component::getEnrollmentTotal)
+                .mapToInt(ClassComponent::getEnrollmentTotal)
                 .sum();
     }
 
@@ -65,7 +60,7 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     }
 
     @Override
-    public void addNewComponent(Component newComponent) {
+    public void addNewComponent(ClassComponent newComponent) {
         componentList.add(newComponent);
     }
 
@@ -80,12 +75,13 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
         if(o1.getLocation() == "BURNABY" && o2.getLocation() == "SURREY"){
             return -1;
-        } else if (o1.getLocation() == o2.getLocation()){
-            return o1.parseSemester() - o2.parseSemester();
+        } else if ( o1.getLocation().equals( o2.getLocation() ) ){
+            return o1.semester - o2.semester;
         } else {
             return 1;
         }
 
     }
+
 
 }
