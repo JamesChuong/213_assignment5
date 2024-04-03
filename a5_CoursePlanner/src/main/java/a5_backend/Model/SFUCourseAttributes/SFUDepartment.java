@@ -8,12 +8,15 @@ import java.util.HashMap;
 
 public class SFUDepartment implements Department<SFUCourse> {
     private String departmentName;
-    public SFUDepartment(String departmentName) {
-        this.departmentName = departmentName;
-    }
 
     //Maps a course to its catalog number
     private HashMap<String, Course> courseList;
+
+    public SFUDepartment(String departmentName) {
+
+        this.departmentName = departmentName;
+        this.courseList = new HashMap<>();
+    }
 
     @Override
     public void addNewCourse(Course newCourse) {

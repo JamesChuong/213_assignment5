@@ -13,15 +13,15 @@ public class SFUCourseComponent implements ClassComponent {
     private final int semester;
     private final String componentCode;     //Could be a lecture, lab, tutorial, etc.
 
-    public SFUCourseComponent(int capacity, int totalEnrollmentCount, String instructor,  String departmentName
-            , String catalogNumber,  String location, int semester, String componentType){
-        this.capacity = capacity;
-        this.totalEnrollmentCount = totalEnrollmentCount;
+    public SFUCourseComponent(String capacity, String totalEnrollmentCount, String instructor,  String departmentName
+            , String catalogNumber,  String location, String semester, String componentType){
+        this.capacity = Integer.parseInt(capacity);
+        this.totalEnrollmentCount = Integer.parseInt(totalEnrollmentCount);
         this.instructor = instructor;
         this.departmentName = departmentName;
         this.catalogNumber = catalogNumber;
         this.location = location;
-        this.semester = semester;
+        this.semester = Integer.parseInt(semester);
         this.componentCode = componentType;
     }
     @Override

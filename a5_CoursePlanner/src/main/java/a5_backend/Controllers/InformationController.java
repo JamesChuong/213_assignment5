@@ -1,6 +1,7 @@
 package a5_backend.Controllers;
 
 
+import a5_backend.DTOs.ApiAboutDTO;
 import a5_backend.Services.InformationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class InformationController {
-    private InformationService informationService;
+    private InformationService informationService = new InformationService();
 
-    @GetMapping("api/dump-model")
+    @GetMapping("/api/about")
+    public ApiAboutDTO getAbout() {
+        ApiAboutDTO aboutDTO = new ApiAboutDTO("Moe and James' Amazing Course Planner",
+                "Mohamed Mustafa and James Chuong");
+        return aboutDTO;
+    }
+
+    @GetMapping("/api/dump-model")
     public void dumpAllClasses() {
         informationService.dumpModel();
 

@@ -20,18 +20,21 @@ public class SFUDepartmentList implements DepartmentList {
         //NOTE: I don't think we need the CSVReader/Printer interfaces
         try{
             Scanner CSVReader = new Scanner(new File(CSVFile));
+            if (CSVReader.hasNextLine()) { CSVReader.nextLine(); } // Skip the header line in the CSV file
+
+
             CSVReader.useDelimiter(",");
             while(CSVReader.hasNext()){
                 //For each line in the file, create an object which implements the Component interface
                 //and add it to the course found in the hashmap with the department name
 
-                int enrollmentCapacity = CSVReader.nextInt();
-                int enrollmentTotal = CSVReader.nextInt();
-                String instructors = CSVReader.next().trim();
+                String semester = CSVReader.next().trim();
                 String subject = CSVReader.next().trim();
                 String catalogNumber = CSVReader.next().trim();
                 String location = CSVReader.next().trim();
-                String semester = CSVReader.next().trim();
+                String enrollmentCapacity = CSVReader.next().trim();
+                String enrollmentTotal = CSVReader.next().trim();
+                String instructors = CSVReader.next().trim();
                 String componentCode = CSVReader.next().trim();
 
                 if (instructors.equals("<null>")) { instructors = "";}
@@ -39,9 +42,8 @@ public class SFUDepartmentList implements DepartmentList {
                 if (CSVReader.hasNextLine()) { CSVReader.nextLine(); }
 
                 // Change the semester string into an int and create a SFUCourseComponent object
-                int semesterInt = Integer.parseInt(semester);
-                ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
-                        instructors, subject, catalogNumber, location, semesterInt, componentCode);
+                SFUCourseComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
+                        instructors, subject, catalogNumber, location, semester, componentCode);
 
                 addComponent(newClassComponent);
             }
@@ -91,5 +93,11 @@ public class SFUDepartmentList implements DepartmentList {
 
     public void dumpModel() {
 
+
+    }
+
+    // TODO: implement getAllDepartments
+    public Department[] getAllDepartments() {
+        return null;
     }
 }
