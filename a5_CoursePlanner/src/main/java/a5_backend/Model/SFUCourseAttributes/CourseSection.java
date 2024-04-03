@@ -64,10 +64,17 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         componentList.add(newComponent);
     }
 
-    //TODO: Implement this method
     @Override
     public void printAllComponents() {
-
+        for(ClassComponent newComponent: componentList){
+            String componentTitle = String.format("%d in %s by %s", newComponent.getSemester()
+                    , newComponent.getLocation(), newComponent.getInstructor());
+            String enrollmentTotals = String.format( "Type=%s, Enrollment=%d/%d", newComponent.getComponentCode()
+                    , newComponent.getEnrollmentTotal(), newComponent.getCapacity() );
+            int padding = (componentTitle.length()-enrollmentTotals.length())/2;    //Padding around the text containing the type of component and capacity
+            System.out.println(componentTitle);
+            System.out.println(String.format("%"+ padding +"s", enrollmentTotals));
+        }
     }
 
     @Override
@@ -75,8 +82,12 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
         if(o1.getLocation() == "BURNABY" && o2.getLocation() == "SURREY"){
             return -1;
-        } else if ( o1.getLocation().equals( o2.getLocation() ) ){
-            return o1.semester - o2.semester;
+        } else if ( o2.getLocation().equals( o1.getLocation() ) ){
+            if(o2.semester == o1.semester){
+                return o2.instructor.compareTo(o1.instructor);
+            } else {
+                return o2.semester - o1.semester;
+            }
         } else {
             return 1;
         }

@@ -5,6 +5,7 @@ import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class SFUDepartment implements Department<SFUCourse> {
     private String departmentName;
@@ -36,10 +37,13 @@ public class SFUDepartment implements Department<SFUCourse> {
         }
     }
 
-    //TODO: Implement method for printing to terminal
     @Override
     public void printAllCourseOfferings() {
-
+        Set<String> allCourses = courseList.keySet();
+        for(String currentCourse: allCourses){
+            courseList.get(currentCourse)
+                    .printSections();
+        }
     }
 
     @Override
