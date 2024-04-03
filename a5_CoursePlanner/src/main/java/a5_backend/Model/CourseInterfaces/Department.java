@@ -21,4 +21,5 @@ public interface Department<T extends Course> {
 
     void printAllCourseOfferings();
 
+    String getName();
 }

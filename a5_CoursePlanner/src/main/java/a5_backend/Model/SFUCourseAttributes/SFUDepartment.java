@@ -3,11 +3,14 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
-import a5_backend.Model.SFUCourseAttributes.SFUCourse;
 
 import java.util.HashMap;
 
 public class SFUDepartment implements Department<SFUCourse> {
+    private String departmentName;
+    public SFUDepartment(String departmentName) {
+        this.departmentName = departmentName;
+    }
 
     //Maps a course to its catalog number
     private HashMap<String, Course> courseList;
@@ -34,6 +37,11 @@ public class SFUDepartment implements Department<SFUCourse> {
     @Override
     public void printAllCourseOfferings() {
 
+    }
+
+    @Override
+    public String getName() {
+        return this.departmentName;
     }
 
     // THESE 3 METHODS ARE NOT IMPORTANT FOR PART 1 (I think)

@@ -8,6 +8,7 @@ import a5_backend.Model.SFUCourseAttributes.SFUDepartment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class SFUDepartmentList implements DepartmentList {
@@ -44,29 +45,51 @@ public class SFUDepartmentList implements DepartmentList {
 
                 addComponent(newClassComponent);
             }
+
             CSVReader.close();
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }
     }
 
+    // Adds component to a department's course component list. If the
+    // department isn't found, then it creates a new department and
+    // adds that course component to the new department.
     private void addComponent(ClassComponent newComponent){
-        boolean departmentIsFound = allDepartmentsAtSFU.containsKey(newComponent.getDepartmentName());
-        if(!departmentIsFound){
-            createNewDepartment(newComponent.getDepartmentName(), newComponent);
-        } else{
-            createNewDepartment(newComponent.getDepartmentName(), newComponent);
+        String departmentName = newComponent.getDepartmentName();
+        Department department = allDepartmentsAtSFU.get(departmentName);
+        if (department == null) {
+            department = new SFUDepartment(departmentName);
+            allDepartmentsAtSFU.put(departmentName, department);
         }
+        department.addNewComponent(newComponent);
     }
 
     private void createNewDepartment(String departmentName, ClassComponent newComponent){
-        Department newSFUDepartment = new SFUDepartment();
+        Department newSFUDepartment = new SFUDepartment(departmentName);
         newSFUDepartment.addNewComponent(newComponent);
         allDepartmentsAtSFU.put(departmentName, newSFUDepartment);
     }
     @Override
     public void printCSVFile() {
+        for (Map.Entry<String, Department> entry : allDepartmentsAtSFU.entrySet()) {
+            String departmentName = entry.getKey();
+            Department department = entry.getValue();
 
+            System.out.println("Department: " + departmentName);
+            /*
+            for (ClassComponent component : department.getComponents()) {
+
+                System.out.println(component);
+            }
+
+             */
+        }
+
+
+    }
+
+    public void dumpModel() {
 
     }
 }
