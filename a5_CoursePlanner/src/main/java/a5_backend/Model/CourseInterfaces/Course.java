@@ -7,6 +7,8 @@ public interface Course {
 
     String getDepartmentName();
 
+    void printSections();
+
     String getCatalogNumber();
 
 }

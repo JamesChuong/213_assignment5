@@ -44,11 +44,16 @@ public class SFUCourse implements Course {
         }
     }
 
-
-
     @Override
     public String getDepartmentName() {
         return departmentName;
+    }
+
+    @Override
+    public void printSections() {
+        for(CourseSection currentSection: courseSections){
+            currentSection.printAllComponents();
+        }
     }
 
     @Override

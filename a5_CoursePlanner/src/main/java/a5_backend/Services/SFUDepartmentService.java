@@ -11,7 +11,7 @@ public class SFUDepartmentService {
 
     @PostConstruct
     public void init() {
-        sfuDepartmentList.readCSVFile("data/course_data_2018.csv");
+        sfuDepartmentList.loadCSVFile("data/course_data_2018.csv");
     }
 
     public Department getDepartment(String departmentName) {
