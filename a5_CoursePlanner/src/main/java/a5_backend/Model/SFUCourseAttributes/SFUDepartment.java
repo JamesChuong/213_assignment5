@@ -15,6 +15,7 @@ public class SFUDepartment implements Department<SFUCourse> {
     @Override
     public void addNewCourse(Course newCourse) {
 
+
     }
 
     @Override
