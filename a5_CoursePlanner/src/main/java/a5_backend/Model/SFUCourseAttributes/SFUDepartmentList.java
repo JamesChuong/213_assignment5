@@ -7,9 +7,7 @@ import a5_backend.Model.SFUCourseAttributes.SFUDepartment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class SFUDepartmentList implements DepartmentList {
 
@@ -19,11 +17,14 @@ public class SFUDepartmentList implements DepartmentList {
     public void loadCSVFile(String CSVFile) {
         //NOTE: I don't think we need the CSVReader/Printer interfaces
         try{
-            Scanner CSVReader = new Scanner(new File(CSVFile));
-            CSVReader.useDelimiter(",");
-            while(CSVReader.hasNext()){
+            File openedFile = new File(CSVFile);
+            Scanner CSVReader = new Scanner(openedFile);
+            CSVReader.nextLine();
+            while(CSVReader.hasNextLine()){
                 //For each line in the file, create an object which implements the Component interface
                 //and add it to the course found in the hashmap with the department name
+                parseLine(CSVReader.nextLine());
+                /*
                 int enrollmentCapacity = CSVReader.nextInt();
                 int enrollmentTotal = CSVReader.nextInt();
                 String instructors = CSVReader.next().trim();
@@ -39,12 +40,47 @@ public class SFUDepartmentList implements DepartmentList {
                 ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
                         instructors, subject, catalogNumber, location, semesterInt, componentCode);
                 addComponent(newClassComponent);
+                 */
+
             }
             CSVReader.close();
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }
     }
+
+    private void parseLine(String CSVLine){
+        Scanner lineScanner = new Scanner(CSVLine);
+        lineScanner.useDelimiter(",");
+        String semester = lineScanner.next().trim();
+        int semesterInt = Integer.parseInt(semester);
+        String subject = lineScanner.next().trim();
+        String catalogNumber = lineScanner.next().trim();
+        String location = lineScanner.next().trim();
+        int enrollmentCapacity = lineScanner.nextInt();
+        int enrollmentTotal = lineScanner.nextInt();
+        List<String> instructors = new ArrayList<>();
+        String instructorLine = lineScanner.next();
+        if(instructorLine.equals("<null>")){
+            instructors.add(" ");
+        } else if (instructorLine.contains("\"")){
+            instructors.add(instructorLine.trim().replace("\"", ""));
+            String nextInstructor = lineScanner.next();
+            while(!nextInstructor.contains("\"")){
+                instructors.add(nextInstructor.trim());
+                nextInstructor = lineScanner.next();
+            }
+            instructors.add(nextInstructor.replace("\"", "").trim());
+        } else {
+            instructors.add(instructorLine.trim());
+        }
+        String componentCode = lineScanner.next().trim();
+        //System.out.println(componentCode);
+        ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
+                instructors, subject, catalogNumber, location, semesterInt, componentCode);
+        addComponent(newClassComponent);
+    }
+
 
     // Adds component to a department's course component list. If the
     // department isn't found, then it creates a new department and
@@ -71,13 +107,7 @@ public class SFUDepartmentList implements DepartmentList {
             Department department = entry.getValue();
 
             System.out.println("Department: " + departmentName);
-            /*
-            for (ClassComponent component : department.getComponents()) {
-
-                System.out.println(component);
-            }
-
-             */
+            department.printAllCourseOfferings();
         }
 
 

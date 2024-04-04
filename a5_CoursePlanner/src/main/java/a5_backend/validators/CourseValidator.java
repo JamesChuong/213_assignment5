@@ -8,7 +8,7 @@ public class CourseValidator {
             && previousSection.catalogNumber == section.catalogNumber
             && previousSection.semester == section.semester
             && previousSection.location == section.location
-            && previousSection.instructor == section.instructor) { return true; }
+            && previousSection.instructors == section.instructors) { return true; }
         else { return false; }
     }
 }

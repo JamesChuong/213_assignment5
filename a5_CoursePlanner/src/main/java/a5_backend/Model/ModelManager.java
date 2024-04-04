@@ -8,4 +8,8 @@ public class ModelManager {
     public ModelManager(){
         SFUDepartments.loadCSVFile("data/course_data_2018.csv");
     }
+
+    public void dumpModel(){
+        SFUDepartments.printCSVFile();
+    }
 }

@@ -2,6 +2,7 @@ package a5_backend.Model.SFUCourseAttributes;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Section;
+import java.lang.Math;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,12 +11,12 @@ import java.util.List;
 public class CourseSection implements Section, Comparator<CourseSection> {
 
     private final List<ClassComponent> componentList = new ArrayList<>();
-
+    private boolean hasOtherComponents = false; //True if a class has other components aside from lectures, like labs, tutorials, etc.
     public String department;
     public String catalogNumber;
     public int semester;
     public String location;
-    public String instructor;
+    public List<String> instructors;
 
     public CourseSection(){}
 
@@ -25,7 +26,8 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         newSection.catalogNumber = newComponent.getCatalogNumber();
         newSection.semester = newComponent.getSemester();
         newSection.location = newComponent.getLocation();
-        newSection.instructor = newComponent.getInstructor();
+        newSection.instructors = newComponent.getInstructors();
+        newSection.addNewComponent(newComponent);
         return newSection;
     }
 
@@ -61,38 +63,44 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
     @Override
     public void addNewComponent(ClassComponent newComponent) {
-        componentList.add(newComponent);
+        if(!newComponent.getComponentCode().equals("LEC")){
+            hasOtherComponents = true;
+            componentList.addLast(newComponent);
+        } else {
+            componentList.addFirst(newComponent);
+        }
     }
 
     @Override
     public void printAllComponents() {
-        for(ClassComponent newComponent: componentList){
-            String componentTitle = String.format("%d in %s by %s", newComponent.getSemester()
-                    , newComponent.getLocation(), newComponent.getInstructor());
-            String enrollmentTotals = String.format( "Type=%s, Enrollment=%d/%d", newComponent.getComponentCode()
-                    , newComponent.getEnrollmentTotal(), newComponent.getCapacity() );
-            int padding = (componentTitle.length()-enrollmentTotals.length())/2;    //Padding around the text containing the type of component and capacity
-            System.out.println(componentTitle);
-            System.out.println(String.format("%"+ padding +"s", enrollmentTotals));
+        String componentTitle = String.format("%d in %s by %s", semester
+                , location, componentList.getFirst().getInstructorsAsString());
+        System.out.println(componentTitle);
+        String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
+                ,getTotalLecEnrollment(), getTotalEnrollmentCapacity());
+        //int padding = Math.abs((componentTitle.length()-lecEnrollmentTotals.length())/2);    //Padding around the text containing the type of component and capacity
+            System.out.println(String.format("%5s%s", " ", lecEnrollmentTotals));
+
+        if(hasOtherComponents){
+            String otherEnrollmentTotals = String.format("Type=%s, Enrollment=%d/%d"
+                    , componentList.getLast().getComponentCode(), getTotalLabEnrollment(), getTotalEnrollmentCapacity());
+            //padding = Math.abs((componentTitle.length()-otherEnrollmentTotals.length())/2);    //Padding around the text containing the type of component and capacity
+            System.out.println(String.format("%5s%s", " ", otherEnrollmentTotals));
         }
     }
 
     @Override
     public int compare(CourseSection o1, CourseSection o2) {
 
-        if(o1.getLocation() == "BURNABY" && o2.getLocation() == "SURREY"){
-            return -1;
-        } else if ( o2.getLocation().equals( o1.getLocation() ) ){
-            if(o2.semester == o1.semester){
-                return o2.instructor.compareTo(o1.instructor);
+        if ( o1.getLocation().equals( o2.getLocation() ) ){
+            if(o1.semester == o2.semester){
+                return o1.instructors.getFirst().compareTo(o2.instructors.getFirst());
             } else {
-                return o2.semester - o1.semester;
+                return o1.semester - o2.semester;
             }
         } else {
-            return 1;
+            return o1.location.compareTo(o2.location);
         }
-
     }
-
 
 }

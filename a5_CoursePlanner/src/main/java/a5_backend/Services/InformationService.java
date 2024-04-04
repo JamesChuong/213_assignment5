@@ -7,6 +7,7 @@ public class InformationService {
     private SFUDepartmentList sfuDepartmentList = new SFUDepartmentList();
 
     public void dumpModel() {
+
         sfuDepartmentList.dumpModel();
     }
 

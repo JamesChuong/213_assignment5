@@ -9,12 +9,13 @@ import java.util.Set;
 
 public class SFUDepartment implements Department<SFUCourse> {
     private String departmentName;
+
+    //Maps a course to its catalog number
+    private HashMap<String, Course> courseList = new HashMap<>();
+
     public SFUDepartment(String departmentName) {
         this.departmentName = departmentName;
     }
-
-    //Maps a course to its catalog number
-    private HashMap<String, Course> courseList;
 
     @Override
     public void addNewCourse(Course newCourse) {
