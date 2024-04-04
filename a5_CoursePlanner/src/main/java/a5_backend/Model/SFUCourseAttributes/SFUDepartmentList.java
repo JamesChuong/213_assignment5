@@ -16,7 +16,7 @@ public class SFUDepartmentList implements DepartmentList {
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
     private HashMap<String, Department> allDepartmentsAtSFU = new HashMap<>();
     @Override
-    public void readCSVFile(String CSVFile) {
+    public void loadCSVFile(String CSVFile) {
         //NOTE: I don't think we need the CSVReader/Printer interfaces
         try{
             Scanner CSVReader = new Scanner(new File(CSVFile));

@@ -3,6 +3,7 @@ package a5_backend.Controllers;
 import a5_backend.DTOs.ApiDepartmentDTO;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Services.SFUDepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 public class SFUDepartmentController {
     private SFUDepartmentService sfuDepartmentService;
 
+    @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
         this.sfuDepartmentService = sfuDepartmentService;
     }
