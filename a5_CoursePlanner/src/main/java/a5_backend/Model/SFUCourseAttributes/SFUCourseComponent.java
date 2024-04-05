@@ -16,11 +16,14 @@ public class SFUCourseComponent implements ClassComponent {
     private final int semester;
     private final String componentCode;     //Could be a lecture, lab, tutorial, etc.
 
+
     public SFUCourseComponent(int capacity, int totalEnrollmentCount, List<String> instructors,  String departmentName
             , String catalogNumber,  String location, int semester, String componentType){
         this.capacity = capacity;
         this.totalEnrollmentCount = totalEnrollmentCount;
         this.instructors = instructors;
+
+
         this.departmentName = departmentName;
         this.catalogNumber = catalogNumber;
         this.location = location;

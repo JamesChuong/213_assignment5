@@ -17,6 +17,7 @@ public class SFUDepartment implements Department<SFUCourse> {
         this.departmentName = departmentName;
     }
 
+
     @Override
     public void addNewCourse(Course newCourse) {
 
