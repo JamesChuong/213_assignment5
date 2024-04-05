@@ -68,35 +68,49 @@ public class SFUDepartmentList implements DepartmentList {
     private void parseLine(String CSVLine){
         System.out.println(CSVLine);
         Scanner lineScanner = new Scanner(CSVLine);
-        lineScanner.useDelimiter(",");
-        String semester = lineScanner.next().trim();
-        int semesterInt = Integer.parseInt(semester);
-        String subject = lineScanner.next().trim();
-        String catalogNumber = lineScanner.next().trim();
-        String location = lineScanner.next().trim();
-        int enrollmentCapacity = lineScanner.nextInt();
-        int enrollmentTotal = lineScanner.nextInt();
-        List<String> instructors = new ArrayList<>();
-        String instructorLine = lineScanner.next();
-        if(instructorLine.equals("<null>")){
-            instructors.add(" ");
-        } else if (instructorLine.contains("\"")){
-            instructors.add(instructorLine.trim().replace("\"", ""));
-            String nextInstructor = lineScanner.next();
-            while(!nextInstructor.contains("\"")){
-                instructors.add(nextInstructor.trim());
-                nextInstructor = lineScanner.next();
+        lineScanner.useDelimiter(","); // DELIMITER HERE
+        try {
+            String semester = lineScanner.next().trim();
+            int semesterInt = Integer.parseInt(semester);
+            String subject = lineScanner.next().trim();
+            String catalogNumber = lineScanner.next().trim();
+            String location = lineScanner.next().trim();
+            int enrollmentCapacity = lineScanner.nextInt();
+            int enrollmentTotal = lineScanner.nextInt();
+
+            String instructorLine = "";
+            if (lineScanner.hasNext()) {
+                instructorLine = lineScanner.next().trim();
             }
-            instructors.add(nextInstructor.replace("\"", ""));
-        } else {
-            instructors.add(instructorLine.trim());
+            List<String> instructors = new ArrayList<>();
+            if ("<null>".equals(instructorLine)) {
+                instructors.add("");
+            } else {
+                String[] instructorArray = instructorLine.split("\\."); //SPLIT LINE HERE
+                for (String instructor : instructorArray) {
+                    instructors.add(instructor.trim());
+                }
+            }
+            String componentCode = "";
+            if (lineScanner.hasNext()) {
+                componentCode = lineScanner.next().trim();
+            }
+
+            //System.out.println(semester + " " + subject + " " + catalogNumber + " " + enrollmentTotal + " " + enrollmentCapacity + " " + instructors);
+
+            ClassComponent newClassComponent = new SFUCourseComponent(
+                    enrollmentCapacity, enrollmentTotal, instructors, subject,
+                    catalogNumber, location, semesterInt, componentCode
+            );
+
+
+            addComponent(newClassComponent);
+        } catch (NoSuchElementException | NumberFormatException e) {
+            System.err.println("Error parsing line: " + CSVLine);
+            e.printStackTrace();
+        } finally {
+            lineScanner.close();
         }
-        //System.out.println(semester + " " + subject + " " + catalogNumber+ " " + enrollmentTotal + " " + enrollmentCapacity + " " + instructors);
-        String componentCode = lineScanner.next().trim();
-        System.out.println(componentCode);
-        ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
-                instructors, subject, catalogNumber, location, semesterInt, componentCode);
-        addComponent(newClassComponent);
     }
 
 
