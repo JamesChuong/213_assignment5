@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class InformationController {
-    private final InformationService informationService = new InformationService();
+    private InformationService informationService = new InformationService();
 
     @GetMapping("/api/about")
     public ApiAboutDTO getAbout() {
