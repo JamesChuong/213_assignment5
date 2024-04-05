@@ -79,13 +79,13 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
                 ,getTotalLecEnrollment(), getTotalEnrollmentCapacity());
         //int padding = Math.abs((componentTitle.length()-lecEnrollmentTotals.length())/2);    //Padding around the text containing the type of component and capacity
-            System.out.println(String.format("%5s%s", " ", lecEnrollmentTotals));
+            System.out.printf("%5s%s%n", " ", lecEnrollmentTotals);
 
         if(hasOtherComponents){
             String otherEnrollmentTotals = String.format("Type=%s, Enrollment=%d/%d"
                     , componentList.getLast().getComponentCode(), getTotalLabEnrollment(), getTotalEnrollmentCapacity());
             //padding = Math.abs((componentTitle.length()-otherEnrollmentTotals.length())/2);    //Padding around the text containing the type of component and capacity
-            System.out.println(String.format("%5s%s", " ", otherEnrollmentTotals));
+            System.out.printf("%5s%s%n", " ", otherEnrollmentTotals);
         }
     }
 

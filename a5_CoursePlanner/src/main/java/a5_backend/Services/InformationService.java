@@ -4,11 +4,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InformationService {
-    private SFUDepartmentList sfuDepartmentList = new SFUDepartmentList();
+    private final SFUDepartmentList sfuDepartmentList = SFUDepartmentList.createDepartmentListWithCSVFile("a5_CoursePlanner/data/course_data_2018_test.csv");
 
     public void dumpModel() {
 
-        sfuDepartmentList.dumpModel();
+        sfuDepartmentList.printCSVFile();
     }
 
 }

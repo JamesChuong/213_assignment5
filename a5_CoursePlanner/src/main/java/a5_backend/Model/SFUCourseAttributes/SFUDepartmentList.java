@@ -12,7 +12,14 @@ import java.util.*;
 public class SFUDepartmentList implements DepartmentList {
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
-    private HashMap<String, Department> allDepartmentsAtSFU = new HashMap<>();
+    private final HashMap<String, Department> allDepartmentsAtSFU = new HashMap<>();
+
+    public static SFUDepartmentList createDepartmentListWithCSVFile(String CSVFile){
+        SFUDepartmentList newDepartmentList = new SFUDepartmentList();
+        newDepartmentList.loadCSVFile(CSVFile);
+        return newDepartmentList;
+    }
+
     @Override
     public void loadCSVFile(String CSVFile) {
         //NOTE: I don't think we need the CSVReader/Printer interfaces
@@ -24,6 +31,7 @@ public class SFUDepartmentList implements DepartmentList {
                 //For each line in the file, create an object which implements the Component interface
                 //and add it to the course found in the hashmap with the department name
                 parseLine(CSVReader.nextLine());
+
                 /*
                 int enrollmentCapacity = CSVReader.nextInt();
                 int enrollmentTotal = CSVReader.nextInt();
@@ -56,9 +64,7 @@ public class SFUDepartmentList implements DepartmentList {
 
                 addComponent(newClassComponent);
                  */
-
             }
-
             CSVReader.close();
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
@@ -87,11 +93,11 @@ public class SFUDepartmentList implements DepartmentList {
                 instructors.add(nextInstructor.trim());
                 nextInstructor = lineScanner.next();
             }
-            instructors.add(nextInstructor.replace("\"", ""));
+            instructors.add(nextInstructor.replace("\"", "").trim());
         } else {
             instructors.add(instructorLine.trim());
         }
-        //System.out.println(semester + " " + subject + " " + catalogNumber+ " " + enrollmentTotal + " " + enrollmentCapacity + " " + instructors);
+        System.out.println(semester + " " + subject + " " + location + " " + catalogNumber+ " " + enrollmentCapacity + " " + enrollmentTotal + " " + instructors);
         String componentCode = lineScanner.next().trim();
         System.out.println(componentCode);
         ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
@@ -131,10 +137,6 @@ public class SFUDepartmentList implements DepartmentList {
 
     }
 
-    public void dumpModel() {
-
-
-    }
 
     // TODO: implement getAllDepartments
     public Department[] getAllDepartments() {

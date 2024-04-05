@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 public class SFUDepartmentController {
-    private SFUDepartmentService sfuDepartmentService;
+    private final SFUDepartmentService sfuDepartmentService;
 
     @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {

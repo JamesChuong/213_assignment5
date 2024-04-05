@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class SFUDepartment implements Department<SFUCourse> {
-    private String departmentName;
+    private final String departmentName;
 
     //Maps a course to its catalog number
-    private HashMap<String, Course> courseList = new HashMap<>();
+    private final HashMap<String, Course> courseList = new HashMap<>();
 
     public SFUDepartment(String departmentName) {
         this.departmentName = departmentName;

@@ -11,12 +11,12 @@ import java.util.List;
 
 @Service
 public class SFUDepartmentService {
-    private SFUDepartmentList sfuDepartmentList = new SFUDepartmentList();
+    private final SFUDepartmentList sfuDepartmentList = new SFUDepartmentList();
 
     @PostConstruct
     public void init() {
         try {
-            sfuDepartmentList.loadCSVFile("data/course_data_2018.csv");
+            sfuDepartmentList.loadCSVFile("a5_CoursePlanner/data/course_data_2018_test.csv");
         } catch (Exception e) {
             e.printStackTrace();
         }
