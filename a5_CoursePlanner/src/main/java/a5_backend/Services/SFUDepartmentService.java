@@ -16,7 +16,7 @@ public class SFUDepartmentService {
     @PostConstruct
     public void init() {
         try {
-            sfuDepartmentList.loadCSVFile("a5_CoursePlanner/data/course_data_2018_test.csv");
+            sfuDepartmentList.loadCSVFile("a5_CoursePlanner/data/course_data_2018.csv");
         } catch (Exception e) {
             e.printStackTrace();
         }
