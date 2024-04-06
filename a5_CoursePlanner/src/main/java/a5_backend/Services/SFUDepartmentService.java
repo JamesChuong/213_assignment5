@@ -29,9 +29,7 @@ public class SFUDepartmentService {
         return sfuDepartmentList.getDepartment(departmentID);
     }
 
-
     public List<ApiDepartmentDTO> getAllDepartments() {
-        System.out.println("getting departments");
         List<ApiDepartmentDTO> departmentDTOs = new ArrayList<>();
         for (Iterator<? extends Department> it = sfuDepartmentList.getAllDepartments(); it.hasNext();) {
             Department department = it.next();

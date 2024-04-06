@@ -76,7 +76,6 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         String componentTitle = String.format("%" + SECTION_HEADER_PADDING + "s%d in %s by %s", " ", semester
                 , location, componentList.getFirst().getInstructorsAsString());
         System.out.println(componentTitle);
-
             String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
                     ,getTotalLecEnrollment(), getTotalEnrollmentCapacity());
             System.out.printf("%" + COMPONENT_PADDING + "s%s%n", " ", lecEnrollmentTotals);
