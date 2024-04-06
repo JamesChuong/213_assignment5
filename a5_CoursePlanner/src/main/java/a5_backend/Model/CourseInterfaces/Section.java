@@ -12,6 +12,8 @@ public interface Section {
 
     int getTotalEnrollmentCapacity();
 
+    int getTotalLabEnrollmentCapacity();
+
     void addNewComponent(ClassComponent newComponent);
 
     void printAllComponents();
