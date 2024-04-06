@@ -31,38 +31,6 @@ public class SFUDepartmentList implements DepartmentList {
                 //For each line in the file, create an object which implements the Component interface
                 //and add it to the course found in the hashmap with the department name
                 parseLine(CSVReader.nextLine());
-                /*
-                int enrollmentCapacity = CSVReader.nextInt();
-                int enrollmentTotal = CSVReader.nextInt();
-                String instructors = CSVReader.next().trim();
-            Scanner CSVReader = new Scanner(new File(CSVFile));
-            if (CSVReader.hasNextLine()) { CSVReader.nextLine(); } // Skip the header line in the CSV file
-
-
-            CSVReader.useDelimiter(",");
-            while(CSVReader.hasNext()){
-                //For each line in the file, create an object which implements the Component interface
-                //and add it to the course found in the hashmap with the department name
-
-                String semester = CSVReader.next().trim();
-                String subject = CSVReader.next().trim();
-                String catalogNumber = CSVReader.next().trim();
-                String location = CSVReader.next().trim();
-                String enrollmentCapacity = CSVReader.next().trim();
-                String enrollmentTotal = CSVReader.next().trim();
-                String instructors = CSVReader.next().trim();
-                String componentCode = CSVReader.next().trim();
-
-                if (instructors.equals("<null>")) { instructors = "";}
-
-                if (CSVReader.hasNextLine()) { CSVReader.nextLine(); }
-
-                // Change the semester string into an int and create a SFUCourseComponent object
-                SFUCourseComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
-                        instructors, subject, catalogNumber, location, semester, componentCode);
-
-                addComponent(newClassComponent);
-                 */
             }
             CSVReader.close();
         } catch (FileNotFoundException e){
@@ -130,10 +98,6 @@ public class SFUDepartmentList implements DepartmentList {
         allDepartmentsAtSFU.put(hashingFunction(departmentName), newSFUDepartment);
     }
 
-    public int getSize(){
-        return allDepartmentsAtSFU.size();
-    }
-
     @Override
     public void printCSVFile() {
         System.out.println(allDepartmentsAtSFU.size());
@@ -142,13 +106,20 @@ public class SFUDepartmentList implements DepartmentList {
             System.out.println("Department: " + department.getName());
             department.printAllCourseOfferings();
         }
-
-
     }
 
+    @Override
+    public Department getDepartment(double departmentID){
+        return allDepartmentsAtSFU.get(departmentID);
+    }
 
     // TODO: implement getAllDepartments
-    public Department[] getAllDepartments() {
-        return null;
+    @Override
+    public Iterator<? extends Department> getAllDepartments() {
+        List<Department> departments = new ArrayList<>();
+        for(Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()){
+            departments.add(entry.getValue());
+        }
+        return departments.iterator();
     }
 }

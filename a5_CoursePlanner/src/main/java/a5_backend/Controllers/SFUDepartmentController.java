@@ -29,11 +29,8 @@ public class SFUDepartmentController {
     }
 
 
-
-
     @GetMapping("/api/departments/{departmentId}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable String departmentId) {
-        System.out.println("Getting departments");
+    public ResponseEntity<Department> getDepartmentById(@PathVariable double departmentId) {
         Department department = sfuDepartmentService.getDepartment(departmentId);
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

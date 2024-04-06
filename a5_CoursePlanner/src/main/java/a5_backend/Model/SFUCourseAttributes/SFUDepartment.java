@@ -6,7 +6,6 @@ import a5_backend.Model.CourseInterfaces.Department;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.lang.Math;
 
 public class SFUDepartment implements Department<SFUCourse> {
     private final String departmentName;
