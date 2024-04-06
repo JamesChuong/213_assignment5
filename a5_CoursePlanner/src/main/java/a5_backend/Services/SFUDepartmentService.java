@@ -27,18 +27,17 @@ public class SFUDepartmentService {
         return null;
     }
 
-    /*
+
     public List<ApiDepartmentDTO> getAllDepartments() {
         System.out.println("getting departments");
         List<ApiDepartmentDTO> departmentDTOs = new ArrayList<>();
         for (Department department : sfuDepartmentList.getAllDepartments()) {
             // TODO: implement this
+
         }
         return departmentDTOs;
     }
 
-
-     */
     public void dumpModel(){
         System.out.println(sfuDepartmentList.getSize());
         System.out.println("Dumping Model");

@@ -21,7 +21,7 @@ public class SFUDepartmentController {
         this.sfuDepartmentService = sfuDepartmentService;
     }
 
-    /*
+
     @GetMapping("/api/departments")
     public List<ApiDepartmentDTO> getAllDepartments() {
         List<ApiDepartmentDTO> departments = sfuDepartmentService.getAllDepartments();
@@ -29,7 +29,7 @@ public class SFUDepartmentController {
     }
 
 
-     */
+
 
     @GetMapping("/api/departments/{departmentId}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable String departmentId) {
