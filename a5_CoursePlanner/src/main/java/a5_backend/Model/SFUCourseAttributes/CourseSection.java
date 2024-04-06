@@ -16,8 +16,8 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     public int semester;
     public String location;
     public List<String> instructors;
-    private final int COMPONENT_PADDING = 7;
-    private final int SECTION_HEADER_PADDING = 5;
+    private final int COMPONENT_PADDING = 12;
+    private final int SECTION_HEADER_PADDING = 6;
     public CourseSection(){}
 
     public static CourseSection CreateNewSectionWithComponent(ClassComponent newComponent){
@@ -62,6 +62,14 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     }
 
     @Override
+    public int getTotalLabEnrollmentCapacity() {
+        return componentList.stream()
+                .filter(component -> !component.getComponentCode().equals("LEC") )
+                .mapToInt(ClassComponent::getCapacity)
+                .sum();
+    }
+
+    @Override
     public void addNewComponent(ClassComponent newComponent) {
         if(!newComponent.getComponentCode().equals("LEC")){
             hasOtherComponents = true;
@@ -83,7 +91,7 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         if(hasOtherComponents){
             String otherEnrollmentTotals = String.format("Type=%s, Enrollment=%d/%d"
                     , componentList.getLast().getComponentCode(), getTotalLabEnrollment()
-                    , getTotalEnrollmentCapacity());
+                    , getTotalLabEnrollmentCapacity());
             System.out.printf("%" + COMPONENT_PADDING + "s%s%n", " ", otherEnrollmentTotals);
         }
     }
