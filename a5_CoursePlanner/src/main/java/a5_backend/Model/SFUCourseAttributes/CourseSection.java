@@ -11,8 +11,6 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     private final List<ClassComponent> componentList = new ArrayList<>();
     private boolean hasOtherComponents = false; //True if a class has other components aside from lectures, like labs, tutorials, etc.
 
-    private boolean doesNotHaveLectures = false; //True if a class DOES NOT have a lecture component
-
     public String department;
     public String catalogNumber;
     public int semester;
@@ -69,7 +67,6 @@ public class CourseSection implements Section, Comparator<CourseSection> {
             hasOtherComponents = true;
             componentList.addLast(newComponent);
         } else {
-            doesNotHaveLectures = true;
             componentList.addFirst(newComponent);
         }
     }
@@ -79,11 +76,11 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         String componentTitle = String.format("%" + SECTION_HEADER_PADDING + "s%d in %s by %s", " ", semester
                 , location, componentList.getFirst().getInstructorsAsString());
         System.out.println(componentTitle);
-        if(!doesNotHaveLectures){
+
             String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
                     ,getTotalLecEnrollment(), getTotalEnrollmentCapacity());
             System.out.printf("%" + COMPONENT_PADDING + "s%s%n", " ", lecEnrollmentTotals);
-        } else if(hasOtherComponents){
+        if(hasOtherComponents){
             String otherEnrollmentTotals = String.format("Type=%s, Enrollment=%d/%d"
                     , componentList.getLast().getComponentCode(), getTotalLabEnrollment()
                     , getTotalEnrollmentCapacity());
