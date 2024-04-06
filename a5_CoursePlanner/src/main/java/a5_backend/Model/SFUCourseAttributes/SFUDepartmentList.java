@@ -100,10 +100,8 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public void printCSVFile() {
-        System.out.println(allDepartmentsAtSFU.size());
         for (Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()) {
             Department department = entry.getValue();
-            System.out.println("Department: " + department.getName());
             department.printAllCourseOfferings();
         }
     }
