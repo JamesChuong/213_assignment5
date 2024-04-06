@@ -21,18 +21,25 @@ public class SFUDepartmentController {
         this.sfuDepartmentService = sfuDepartmentService;
     }
 
+    /*
     @GetMapping("/api/departments")
     public List<ApiDepartmentDTO> getAllDepartments() {
         List<ApiDepartmentDTO> departments = sfuDepartmentService.getAllDepartments();
         return departments;
     }
 
+
+     */
+
     @GetMapping("/api/departments/{departmentId}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable String departmentId) {
+        System.out.println("Getting departments");
         Department department = sfuDepartmentService.getDepartment(departmentId);
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(department, HttpStatus.OK);
     }
+
+
 }

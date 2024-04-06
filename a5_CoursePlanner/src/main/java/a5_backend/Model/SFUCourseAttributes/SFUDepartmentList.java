@@ -31,7 +31,6 @@ public class SFUDepartmentList implements DepartmentList {
                 //For each line in the file, create an object which implements the Component interface
                 //and add it to the course found in the hashmap with the department name
                 parseLine(CSVReader.nextLine());
-
                 /*
                 int enrollmentCapacity = CSVReader.nextInt();
                 int enrollmentTotal = CSVReader.nextInt();
@@ -72,7 +71,7 @@ public class SFUDepartmentList implements DepartmentList {
     }
 
     private void parseLine(String CSVLine){
-        System.out.println(CSVLine);
+        //System.out.println(CSVLine); // raw printing out of the whole extracted string
         Scanner lineScanner = new Scanner(CSVLine);
         lineScanner.useDelimiter(",");
         String semester = lineScanner.next().trim();
@@ -97,9 +96,7 @@ public class SFUDepartmentList implements DepartmentList {
         } else {
             instructors.add(instructorLine.trim());
         }
-        System.out.println(semester + " " + subject + " " + location + " " + catalogNumber+ " " + enrollmentCapacity + " " + enrollmentTotal + " " + instructors);
         String componentCode = lineScanner.next().trim();
-        System.out.println(componentCode);
         ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
                 instructors, subject, catalogNumber, location, semesterInt, componentCode);
         addComponent(newClassComponent);
@@ -124,12 +121,17 @@ public class SFUDepartmentList implements DepartmentList {
         newSFUDepartment.addNewComponent(newComponent);
         allDepartmentsAtSFU.put(departmentName, newSFUDepartment);
     }
+
+    public int getSize(){
+        return allDepartmentsAtSFU.size();
+    }
+
     @Override
     public void printCSVFile() {
+        System.out.println(allDepartmentsAtSFU.size());
         for (Map.Entry<String, Department> entry : allDepartmentsAtSFU.entrySet()) {
             String departmentName = entry.getKey();
             Department department = entry.getValue();
-
             System.out.println("Department: " + departmentName);
             department.printAllCourseOfferings();
         }

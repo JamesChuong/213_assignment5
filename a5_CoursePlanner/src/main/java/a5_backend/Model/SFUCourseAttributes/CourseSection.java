@@ -2,8 +2,6 @@ package a5_backend.Model.SFUCourseAttributes;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Section;
-import java.lang.Math;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,12 +10,16 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
     private final List<ClassComponent> componentList = new ArrayList<>();
     private boolean hasOtherComponents = false; //True if a class has other components aside from lectures, like labs, tutorials, etc.
+
+    private boolean doesNotHaveLectures = false; //True if a class DOES NOT have a lecture component
+
     public String department;
     public String catalogNumber;
     public int semester;
     public String location;
     public List<String> instructors;
-
+    private final int COMPONENT_PADDING = 7;
+    private final int SECTION_HEADER_PADDING = 5;
     public CourseSection(){}
 
     public static CourseSection CreateNewSectionWithComponent(ClassComponent newComponent){
@@ -67,25 +69,25 @@ public class CourseSection implements Section, Comparator<CourseSection> {
             hasOtherComponents = true;
             componentList.addLast(newComponent);
         } else {
+            doesNotHaveLectures = true;
             componentList.addFirst(newComponent);
         }
     }
 
     @Override
     public void printAllComponents() {
-        String componentTitle = String.format("%d in %s by %s", semester
+        String componentTitle = String.format("%" + SECTION_HEADER_PADDING + "s%d in %s by %s", " ", semester
                 , location, componentList.getFirst().getInstructorsAsString());
         System.out.println(componentTitle);
-        String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
-                ,getTotalLecEnrollment(), getTotalEnrollmentCapacity());
-        //int padding = Math.abs((componentTitle.length()-lecEnrollmentTotals.length())/2);    //Padding around the text containing the type of component and capacity
-            System.out.printf("%5s%s%n", " ", lecEnrollmentTotals);
-
-        if(hasOtherComponents){
+        if(!doesNotHaveLectures){
+            String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
+                    ,getTotalLecEnrollment(), getTotalEnrollmentCapacity());
+            System.out.printf("%" + COMPONENT_PADDING + "s%s%n", " ", lecEnrollmentTotals);
+        } else if(hasOtherComponents){
             String otherEnrollmentTotals = String.format("Type=%s, Enrollment=%d/%d"
-                    , componentList.getLast().getComponentCode(), getTotalLabEnrollment(), getTotalEnrollmentCapacity());
-            //padding = Math.abs((componentTitle.length()-otherEnrollmentTotals.length())/2);    //Padding around the text containing the type of component and capacity
-            System.out.printf("%5s%s%n", " ", otherEnrollmentTotals);
+                    , componentList.getLast().getComponentCode(), getTotalLabEnrollment()
+                    , getTotalEnrollmentCapacity());
+            System.out.printf("%" + COMPONENT_PADDING + "s%s%n", " ", otherEnrollmentTotals);
         }
     }
 

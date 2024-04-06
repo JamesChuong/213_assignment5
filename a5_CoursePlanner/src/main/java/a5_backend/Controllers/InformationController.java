@@ -3,13 +3,14 @@ package a5_backend.Controllers;
 
 import a5_backend.DTOs.ApiAboutDTO;
 import a5_backend.Services.InformationService;
+import a5_backend.Services.SFUDepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 public class InformationController {
-    private final InformationService informationService = new InformationService();
+    private SFUDepartmentService informationService = new SFUDepartmentService();
 
     @GetMapping("/api/about")
     public ApiAboutDTO getAbout() {
@@ -21,7 +22,6 @@ public class InformationController {
     @GetMapping("/api/dump-model")
     public void dumpAllClasses() {
         informationService.dumpModel();
-
 
     }
 
