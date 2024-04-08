@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class SFUDepartmentService {
-    private final DepartmentList sfuDepartmentList = SFUDepartmentList.createDepartmentListWithCSVFile("data/test_data_a5.csv");
+    private final DepartmentList sfuDepartmentList = SFUDepartmentList.createDepartmentListWithCSVFile("data/course_data_2018.csv");
 
     @PostConstruct
     public void init() {

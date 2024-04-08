@@ -2,7 +2,6 @@ package a5_backend.Controllers;
 
 
 import a5_backend.DTOs.ApiAboutDTO;
-import a5_backend.Services.InformationService;
 import a5_backend.Services.SFUDepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
