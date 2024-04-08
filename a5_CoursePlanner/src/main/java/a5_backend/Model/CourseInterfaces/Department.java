@@ -17,6 +17,7 @@ public interface Department<T extends Course> {
 
     Iterator<? extends Course> getAllCourses();
 
+    //Get all offering a section has for a particular offering of a course
     Iterator<? extends ClassComponent> getAllCourseOfferings(long courseID, long courseOfferingID);
 
     void printAllCourseOfferings();

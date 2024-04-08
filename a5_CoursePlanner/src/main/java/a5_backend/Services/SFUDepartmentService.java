@@ -1,9 +1,8 @@
 package a5_backend.Services;
 
 import a5_backend.DTOs.ApiDepartmentDTO;
-import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
-import a5_backend.Model.DepartmentList;
+import a5_backend.Model.CourseInterfaces.DepartmentList;
 import a5_backend.Model.SFUCourseAttributes.SFUCourse;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
 import jakarta.annotation.PostConstruct;

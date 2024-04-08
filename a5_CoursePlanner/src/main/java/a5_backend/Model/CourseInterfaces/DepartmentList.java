@@ -1,4 +1,4 @@
-package a5_backend.Model;
+package a5_backend.Model.CourseInterfaces;
 
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.SFUCourseAttributes.SFUCourse;

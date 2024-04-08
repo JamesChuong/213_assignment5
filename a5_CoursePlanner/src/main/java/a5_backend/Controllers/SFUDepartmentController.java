@@ -64,33 +64,39 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses")
     public List<ApiCourseDTO> getDepartmentCourses(@PathVariable double departmentID){
-        Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
-        if(department == null){
-            throw new BadRequest("Error: Department Not found");
+
+        try {
+            Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
+            List<ApiCourseDTO> CourseDTOList = new ArrayList<>();
+            Iterator<? extends Course> courseOfferings = department.getAllCourses();
+            while(courseOfferings.hasNext()){
+                Course currentCourse = courseOfferings.next();
+                ApiCourseDTO newCourseDTO = ApiCourseDTO.createNewCourseDTO( currentCourse.getCourseID()
+                        , currentCourse.getCatalogNumber() );
+                CourseDTOList.add(newCourseDTO);
+            }
+            return CourseDTOList;
+        } catch (RuntimeException DepartmentNotFound){
+            throw new BadRequest(DepartmentNotFound.getMessage());
         }
-        List<ApiCourseDTO> CourseDTOList = new ArrayList<>();
-        Iterator<? extends Course> courseOfferings = department.getAllCourses();
-        while(courseOfferings.hasNext()){
-            Course currentCourse = courseOfferings.next();
-            ApiCourseDTO newCourseDTO = ApiCourseDTO.createNewCourseDTO( currentCourse.getCourseID()
-                    , currentCourse.getCatalogNumber() );
-            CourseDTOList.add(newCourseDTO);
-        }
-        return CourseDTOList;
+
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings/{courseOfferingID}")
     public List<ApiOfferingSectionDTO> getCourseSections(@PathVariable double departmentID
             , @PathVariable long courseID, long courseOfferingID){
-        Department<SFUCourse> courseDepartment = sfuDepartmentService.getDepartment(departmentID);
+        try{
+            Department<SFUCourse> courseDepartment = sfuDepartmentService.getDepartment(departmentID);
 
-        Iterator<? extends ClassComponent> allCourseOfferings =
-                courseDepartment.getAllCourseOfferings(courseID, courseOfferingID);
-
-        List<ApiOfferingSectionDTO> offeringList = new ArrayList<>();
-        while (allCourseOfferings.hasNext()){
-            offeringList.add( ApiOfferingSectionDTO.createSectionDTO( allCourseOfferings.next() ) );
+            Iterator<? extends ClassComponent> allCourseOfferings =
+                    courseDepartment.getAllCourseOfferings(courseID, courseOfferingID);
+            List<ApiOfferingSectionDTO> offeringList = new ArrayList<>();
+            while (allCourseOfferings.hasNext()){
+                offeringList.add( ApiOfferingSectionDTO.createSectionDTO( allCourseOfferings.next() ) );
+            }
+            return offeringList;
+        } catch (RuntimeException NotFoundError){
+            throw new BadRequest(NotFoundError.getMessage());
         }
-        return offeringList;
     }
 }

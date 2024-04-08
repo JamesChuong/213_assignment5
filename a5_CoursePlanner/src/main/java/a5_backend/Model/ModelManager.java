@@ -1,5 +1,6 @@
 package a5_backend.Model;
 
+import a5_backend.Model.CourseInterfaces.DepartmentList;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
 
 public class ModelManager {

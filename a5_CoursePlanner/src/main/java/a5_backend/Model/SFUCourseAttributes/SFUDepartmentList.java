@@ -2,7 +2,7 @@ package a5_backend.Model.SFUCourseAttributes;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Department;
-import a5_backend.Model.DepartmentList;
+import a5_backend.Model.CourseInterfaces.DepartmentList;
 import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +12,7 @@ public class SFUDepartmentList implements DepartmentList {
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
     private final HashMap<Double, Department<SFUCourse>> allDepartmentsAtSFU = new HashMap<>();
+    private final int HASH_CONSTANT = 33;
 
     public static SFUDepartmentList createDepartmentListWithCSVFile(String CSVFile){
         SFUDepartmentList newDepartmentList = new SFUDepartmentList();
@@ -28,7 +29,7 @@ public class SFUDepartmentList implements DepartmentList {
             CSVReader.nextLine();
             while(CSVReader.hasNextLine()){
                 //For each line in the file, create an object which implements the Component interface
-                //and add it to the course found in the hashmap with the department name
+                //and add it to the course found in the hashmap with the department ID
                 parseLine(CSVReader.nextLine());
             }
             CSVReader.close();
@@ -82,11 +83,13 @@ public class SFUDepartmentList implements DepartmentList {
         department.addNewComponent(newComponent);
     }
 
+    //Maps department names into a unique key using a polynomial hashing technique
+    //Keys are created via c0*z^0 + c1*z^1 + .... c(N-1)*z^(N-1), where cK is the integer representation of the kth
+    //letter in the name and z is a constant raised to the kth power
     private double hashingFunction(String key){
         double hashCode = 0;
-        int constant = 33;
         for(int i = 0; i < key.length(); i++){
-            hashCode += key.charAt(i)*Math.pow(constant, i);
+            hashCode += key.charAt(i)*Math.pow(HASH_CONSTANT, i);
         }
         return hashCode;
     }
@@ -107,7 +110,12 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public Department<SFUCourse> getDepartment(double departmentID){
-        return allDepartmentsAtSFU.get(departmentID);
+
+        Department<SFUCourse> retreivedDepartment = allDepartmentsAtSFU.get(departmentID);
+        if(retreivedDepartment == null){
+            throw new RuntimeException("Error: Department not found");
+        }
+        return retreivedDepartment;
     }
 
     @Override

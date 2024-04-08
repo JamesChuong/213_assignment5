@@ -74,6 +74,9 @@ public class SFUDepartment implements Department<SFUCourse> {
     @Override
     public Iterator<? extends ClassComponent> getAllCourseOfferings(long courseID, long courseOfferingID) {
         Course retreivedCourse = courseList.get(courseID);
+        if(retreivedCourse == null){
+            throw new RuntimeException("Error: Class not found");
+        }
         Iterator<? extends ClassComponent> allCourseOfferings = retreivedCourse.getCourseOfferings(courseOfferingID);
         return allCourseOfferings;
     }
