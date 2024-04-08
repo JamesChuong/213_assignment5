@@ -1,5 +1,5 @@
 package a5_backend.Model.CourseInterfaces;
-
+import java.util.Iterator;
 
 public interface Course {
 
@@ -10,5 +10,9 @@ public interface Course {
     void printSections();
 
     String getCatalogNumber();
+
+    long getCourseID();
+
+    Iterator<? extends ClassComponent> getCourseOfferings(long courseOfferingID);
 
 }

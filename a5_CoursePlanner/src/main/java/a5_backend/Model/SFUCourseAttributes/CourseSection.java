@@ -4,6 +4,7 @@ import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Section;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class CourseSection implements Section, Comparator<CourseSection> {
@@ -93,6 +94,11 @@ public class CourseSection implements Section, Comparator<CourseSection> {
                     , getTotalLabEnrollmentCapacity());
             System.out.printf("%" + COMPONENT_PADDING + "s%s%n", " ", otherEnrollmentTotals);
         }
+    }
+
+    @Override
+    public Iterator<? extends ClassComponent> getAllComponents() {
+        return componentList.iterator();
     }
 
     @Override

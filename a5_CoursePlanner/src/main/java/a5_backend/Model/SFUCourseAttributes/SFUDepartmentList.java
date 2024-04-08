@@ -3,7 +3,6 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.DepartmentList;
-import a5_backend.Model.SFUCourseAttributes.SFUDepartment;
 import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +11,7 @@ import java.util.*;
 public class SFUDepartmentList implements DepartmentList {
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
-    private final HashMap<Double, Department> allDepartmentsAtSFU = new HashMap<>();
+    private final HashMap<Double, Department<SFUCourse>> allDepartmentsAtSFU = new HashMap<>();
 
     public static SFUDepartmentList createDepartmentListWithCSVFile(String CSVFile){
         SFUDepartmentList newDepartmentList = new SFUDepartmentList();
@@ -75,7 +74,7 @@ public class SFUDepartmentList implements DepartmentList {
     // adds that course component to the new department.
     private void addComponent(ClassComponent newComponent){
         String departmentName = newComponent.getDepartmentName();
-        Department department = allDepartmentsAtSFU.get(hashingFunction(departmentName));
+        Department<SFUCourse> department = allDepartmentsAtSFU.get(hashingFunction(departmentName));
         if (department == null) {
             department = new SFUDepartment(departmentName);
             allDepartmentsAtSFU.put(hashingFunction(departmentName), department);
@@ -93,29 +92,28 @@ public class SFUDepartmentList implements DepartmentList {
     }
 
     private void createNewDepartment(String departmentName, ClassComponent newComponent){
-        Department newSFUDepartment = new SFUDepartment(departmentName);
+        Department<SFUCourse> newSFUDepartment = new SFUDepartment(departmentName);
         newSFUDepartment.addNewComponent(newComponent);
         allDepartmentsAtSFU.put(hashingFunction(departmentName), newSFUDepartment);
     }
 
     @Override
     public void printCSVFile() {
-        for (Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()) {
-            Department department = entry.getValue();
+        for (Map.Entry<Double, Department<SFUCourse>> entry : allDepartmentsAtSFU.entrySet()) {
+            Department<SFUCourse> department = entry.getValue();
             department.printAllCourseOfferings();
         }
     }
 
     @Override
-    public Department getDepartment(double departmentID){
+    public Department<SFUCourse> getDepartment(double departmentID){
         return allDepartmentsAtSFU.get(departmentID);
     }
 
-    // TODO: implement getAllDepartments
     @Override
-    public Iterator<? extends Department> getAllDepartments() {
-        List<Department> departments = new ArrayList<>();
-        for(Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()){
+    public Iterator<? extends Department<SFUCourse>> getAllDepartments() {
+        List<Department<SFUCourse>> departments = new ArrayList<>();
+        for(Map.Entry<Double, Department<SFUCourse>> entry : allDepartmentsAtSFU.entrySet()){
             departments.add(entry.getValue());
         }
         return departments.iterator();

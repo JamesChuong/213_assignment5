@@ -1,6 +1,8 @@
 package a5_backend.Model;
 
 import a5_backend.Model.CourseInterfaces.Department;
+import a5_backend.Model.SFUCourseAttributes.SFUCourse;
+
 import java.util.Iterator;
 
 public interface DepartmentList {
@@ -10,9 +12,9 @@ public interface DepartmentList {
     //Dumps all contents of the CSV file to the terminal
     void printCSVFile();
 
-    Department getDepartment(double departmentID);
+    Department<SFUCourse> getDepartment(double departmentID);
 
     //Returns an iterator of objects which implement the Department interface
-    Iterator<? extends Department> getAllDepartments();
+    Iterator<? extends Department<SFUCourse>> getAllDepartments();
 
 }

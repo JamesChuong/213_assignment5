@@ -1,5 +1,5 @@
 package a5_backend.Model.CourseInterfaces;
-
+import java.util.Iterator;
 /**
  * This interface represents a department at SFU, and contains operations for adding new courses or components,
  * listing all offerings of a course which is part of the department, and listing all sections
@@ -13,11 +13,11 @@ public interface Department<T extends Course> {
     void addNewComponent(ClassComponent newComponent);
 
     //Return a course with the ID and offering ID
-    T getCourseOfferings(int courseID, int courseOfferingID);
+    T getCourseOfferings(long courseID, long courseOfferingID);
 
-    void listAllCourseOfferings(int courseID);
+    Iterator<? extends Course> getAllCourses();
 
-    void listAllCourseSections(int courseID, int courseOfferingID);
+    Iterator<? extends ClassComponent> getAllCourseOfferings(long courseID, long courseOfferingID);
 
     void printAllCourseOfferings();
 
