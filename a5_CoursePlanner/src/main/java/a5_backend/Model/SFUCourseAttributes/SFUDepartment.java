@@ -38,6 +38,11 @@ public class SFUDepartment implements Department<SFUCourse> {
         }
     }
 
+    @Override
+    public SFUCourse getCourseOffering(long courseID, long courseOfferingID) {
+        return null;
+    }
+
     private Long hashingFunction(String key){
         double hashCode = 0;
         int constant = 33;
@@ -61,8 +66,10 @@ public class SFUDepartment implements Department<SFUCourse> {
         return this.departmentName;
     }
 
+
+    //TODO: Implement this method
     @Override
-    public SFUCourse getCourseOfferings(long courseID, long courseOfferingID) {
+    public Iterator<? extends Section> getAllCourseOfferings(long courseID) {
         return null;
     }
 
@@ -72,12 +79,12 @@ public class SFUDepartment implements Department<SFUCourse> {
     }
 
     @Override
-    public Iterator<? extends ClassComponent> getAllCourseOfferings(long courseID, long courseOfferingID) {
+    public Iterator<? extends ClassComponent> getAllCourseOfferingSections(long courseID, long courseOfferingID) {
         Course retreivedCourse = courseList.get(courseID);
         if(retreivedCourse == null){
             throw new RuntimeException("Error: Class not found");
         }
-        Iterator<? extends ClassComponent> allCourseOfferings = retreivedCourse.getCourseOfferings(courseOfferingID);
+        Iterator<? extends ClassComponent> allCourseOfferings = retreivedCourse.getCourseOfferingComponents(courseOfferingID);
         return allCourseOfferings;
     }
 }

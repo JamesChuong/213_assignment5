@@ -7,4 +7,5 @@ public class ApiCourseOfferingDTO {
     public String term;
     public long semesterCode;
     public int year;
+
 }

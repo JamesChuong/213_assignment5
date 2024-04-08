@@ -73,7 +73,7 @@ public class SFUCourse implements Course {
     }
 
     @Override
-    public Iterator<? extends ClassComponent> getCourseOfferings(long courseOfferingID) {
+    public Iterator<? extends ClassComponent> getCourseOfferingComponents(long courseOfferingID) {
         try{
             return courseSections.get((int)courseOfferingID).getAllComponents();
         } catch (IndexOutOfBoundsException err){
