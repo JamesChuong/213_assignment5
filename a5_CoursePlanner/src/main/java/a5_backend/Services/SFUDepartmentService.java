@@ -17,6 +17,7 @@ import java.util.List;
 public class SFUDepartmentService {
     private final DepartmentList sfuDepartmentList = SFUDepartmentList.createDepartmentListWithCSVFile("data/course_data_2018.csv");
 
+    // Initializes SFUDepartmentService before it is used by the controllers
     @PostConstruct
     public void init() {
         try {
@@ -27,14 +28,18 @@ public class SFUDepartmentService {
         }
     }
 
+    // Gets and returns single SFUDepartment from sfuDepartmentList
     public Department<SFUCourse> getDepartment(double departmentID) {
         return sfuDepartmentList.getDepartment(departmentID);
     }
 
+    // Gets the SFUDepartments from sfuDepartmentList and iterates through them then creates
+    // ApiDepartmentDTOs from the iterated departments and adds it to the departmentDTOs list to return
     public List<ApiDepartmentDTO> getAllDepartments() {
         List<ApiDepartmentDTO> departmentDTOs = new ArrayList<>();
         Iterator<? extends Department<SFUCourse>> allDepartments = sfuDepartmentList.getAllDepartments();
         while(allDepartments.hasNext()) {
+            //
             Department<SFUCourse> newSFUDepartment = allDepartments.next();
             ApiDepartmentDTO newApiDepartmentDTO = ApiDepartmentDTO.createApiDepartmentDTO(newSFUDepartment);
             departmentDTOs.add(newApiDepartmentDTO);
