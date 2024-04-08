@@ -4,7 +4,6 @@ import a5_backend.DTOs.ApiDepartmentDTO;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
 import a5_backend.Model.SFUCourseAttributes.SFUCourse;
-import a5_backend.Model.SFUCourseAttributes.SFUDepartment;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
