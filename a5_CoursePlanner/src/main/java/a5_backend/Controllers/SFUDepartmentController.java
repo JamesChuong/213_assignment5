@@ -83,20 +83,31 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings/{courseOfferingID}")
-    public List<ApiOfferingSectionDTO> getCourseSections(@PathVariable double departmentID
+    public List<ApiOfferingSectionDTO> getCourseOfferingComponents(@PathVariable long departmentID
             , @PathVariable long courseID, long courseOfferingID){
         try{
             Department<SFUCourse> courseDepartment = sfuDepartmentService.getDepartment(departmentID);
-
-            Iterator<? extends ClassComponent> allCourseOfferings =
-                    courseDepartment.getAllCourseOfferings(courseID, courseOfferingID);
+            Iterator<? extends ClassComponent> allCourseOfferingComponents =
+                    courseDepartment.getAllCourseOfferingSections(courseID, courseOfferingID);
             List<ApiOfferingSectionDTO> offeringList = new ArrayList<>();
-            while (allCourseOfferings.hasNext()){
-                offeringList.add( ApiOfferingSectionDTO.createSectionDTO( allCourseOfferings.next() ) );
+            while (allCourseOfferingComponents.hasNext()){
+                offeringList.add( ApiOfferingSectionDTO.createSectionDTO( allCourseOfferingComponents.next() ) );
             }
             return offeringList;
         } catch (RuntimeException NotFoundError){
             throw new BadRequest(NotFoundError.getMessage());
+        }
+    }
+
+    @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings")
+    public List<ApiCourseOfferingDTO> getAllCourseOfferings(@PathVariable double departmentID
+            , @PathVariable long courseID){
+        try {
+            //TODO: Implement rest of function
+            Department<SFUCourse> courseDepartment = sfuDepartmentService.getDepartment(departmentID);
+            courseDepartment.getAllCourseOfferings(courseID);
+        } catch (RuntimeException err){
+            throw new BadRequest(err.getMessage());
         }
     }
 }

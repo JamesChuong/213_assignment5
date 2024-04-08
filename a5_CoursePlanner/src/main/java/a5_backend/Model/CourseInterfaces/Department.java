@@ -13,12 +13,13 @@ public interface Department<T extends Course> {
     void addNewComponent(ClassComponent newComponent);
 
     //Return a course with the ID and offering ID
-    T getCourseOfferings(long courseID, long courseOfferingID);
+    T getCourseOffering(long courseID, long courseOfferingID);
 
+    Iterator<? extends Section> getAllCourseOfferings(long courseID);
     Iterator<? extends Course> getAllCourses();
 
     //Get all offering a section has for a particular offering of a course
-    Iterator<? extends ClassComponent> getAllCourseOfferings(long courseID, long courseOfferingID);
+    Iterator<? extends ClassComponent> getAllCourseOfferingSections(long courseID, long courseOfferingID);
 
     void printAllCourseOfferings();
 

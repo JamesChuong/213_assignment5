@@ -110,7 +110,6 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public Department<SFUCourse> getDepartment(double departmentID){
-
         Department<SFUCourse> retreivedDepartment = allDepartmentsAtSFU.get(departmentID);
         if(retreivedDepartment == null){
             throw new RuntimeException("Error: Department not found");

@@ -13,6 +13,8 @@ public interface Course {
 
     long getCourseID();
 
-    Iterator<? extends ClassComponent> getCourseOfferings(long courseOfferingID);
+    Iterator<? extends ClassComponent> getCourseOfferingComponents(long courseOfferingID);
+
+    Iterator<? extends Section> getAllCourseOfferings();
 
 }
