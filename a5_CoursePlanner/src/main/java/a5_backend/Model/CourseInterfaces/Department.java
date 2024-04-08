@@ -1,4 +1,4 @@
-package a5_backend.Model.CourseAttributes;
+package a5_backend.Model.CourseInterfaces;
 
 /**
  * This interface represents a department at SFU, and contains operations for adding new courses or components,
@@ -10,7 +10,7 @@ public interface Department<T extends Course> {
 
     void addNewCourse(Course newCourse);
 
-    void addNewComponent(Component newComponent);
+    void addNewComponent(ClassComponent newComponent);
 
     //Return a course with the ID and offering ID
     T getCourseOfferings(int courseID, int courseOfferingID);

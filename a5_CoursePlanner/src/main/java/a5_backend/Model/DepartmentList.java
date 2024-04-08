@@ -5,8 +5,9 @@ import a5_backend.Model.CSVHelperClasses.CSVReader;
 
 public interface DepartmentList {
 
-    void readCSVFile(String CSVFile, CSVReader reader);
+    void readCSVFile(String CSVFile);
 
+    //Dumps all contents of the CSV file to the terminal
     void printCSVFile();
 
 

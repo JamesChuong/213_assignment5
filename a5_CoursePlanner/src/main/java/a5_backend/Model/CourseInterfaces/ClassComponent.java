@@ -1,6 +1,6 @@
-package a5_backend.Model.CourseAttributes;
+package a5_backend.Model.CourseInterfaces;
 
-public interface Component {
+public interface ClassComponent {
 
     int getCapacity();
 
@@ -8,15 +8,13 @@ public interface Component {
 
     String getDepartmentName();
 
-    int getCatalogNumber();
+    String getCatalogNumber();
 
     String getInstructor();
 
     String getLocation();
 
-    String getSemester();
-
-    int parseSemester();
+    int getSemester();
 
     String getComponentCode();
 }

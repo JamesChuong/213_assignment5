@@ -1,15 +1,16 @@
-package a5_backend.Model;
+package a5_backend.Model.SFUCourseAttributes;
 
-import a5_backend.Model.CourseAttributes.Component;
-import a5_backend.Model.CourseAttributes.Course;
-import a5_backend.Model.CourseAttributes.Department;
+import a5_backend.Model.CourseInterfaces.ClassComponent;
+import a5_backend.Model.CourseInterfaces.Course;
+import a5_backend.Model.CourseInterfaces.Department;
+import a5_backend.Model.SFUCourseAttributes.SFUCourse;
 
 import java.util.HashMap;
 
 public class SFUDepartment implements Department<SFUCourse> {
 
     //Maps a course to its catalog number
-    private HashMap<Integer, Course> courseList;
+    private HashMap<String, Course> courseList;
 
     @Override
     public void addNewCourse(Course newCourse) {
@@ -17,7 +18,7 @@ public class SFUDepartment implements Department<SFUCourse> {
     }
 
     @Override
-    public void addNewComponent(Component newComponent) {
+    public void addNewComponent(ClassComponent newComponent) {
         boolean sectionIsFound = courseList.containsKey(newComponent.getCatalogNumber());
         if(sectionIsFound){
             courseList.get(newComponent.getCatalogNumber())
