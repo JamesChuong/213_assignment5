@@ -1,12 +1,20 @@
 package a5_backend.Model.CourseInterfaces;
-
+import java.util.Iterator;
 
 public interface Course {
 
-    public void addNewComponent(ClassComponent newComponent);
+    void addNewComponent(ClassComponent newComponent);
 
-    String getDepartmentName();
+    String getDEPARTMENT_NAME();
 
-    String getCatalogNumber();
+    void printSections();
+
+    String getCATALOG_NUMBER();
+
+    long getCOURSE_ID();
+
+    Iterator<? extends ClassComponent> getCourseOfferingComponents(long courseOfferingID);
+
+    Iterator<? extends Section> getAllCourseOfferings();
 
 }

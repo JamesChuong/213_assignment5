@@ -1,5 +1,7 @@
 package a5_backend.Model.CourseInterfaces;
 
+import java.util.Iterator;
+
 public interface Section {
 
     int getSemester();
@@ -10,10 +12,22 @@ public interface Section {
 
     int getTotalLabEnrollment();
 
-    int getTotalEnrollmentCapacity();
+    int getTotalLecEnrollmentCapacity();
+
+    int getTotalLabEnrollmentCapacity();
+
+    long getCourseOfferingID();
 
     void addNewComponent(ClassComponent newComponent);
 
     void printAllComponents();
+
+    String getInstructors();
+
+    String getTerm();
+
+    int getYear();
+
+    Iterator<? extends ClassComponent> getAllComponents();
 
 }

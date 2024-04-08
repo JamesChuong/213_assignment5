@@ -2,25 +2,31 @@ package a5_backend.Model.SFUCourseAttributes;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
+import a5_backend.Model.CourseInterfaces.Section;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SFUCourse implements Course {
 
-    private final String departmentName;
+    private final String DEPARTMENT_NAME;
 
-    private final String catalogNumber;
+    private final String CATALOG_NUMBER;
+
+    private final long COURSE_ID;
+    private int indexOfLastSection = -1;
 
     private final List<CourseSection> courseSections = new ArrayList<>(){};
 
-    public SFUCourse(String departmentName, String catalogNumber){
-        this.departmentName = departmentName;
-        this.catalogNumber =  catalogNumber;
+    public SFUCourse(String departmentName, String catalogNumber, long courseID){
+        this.DEPARTMENT_NAME = departmentName;
+        this.CATALOG_NUMBER =  catalogNumber;
+        this.COURSE_ID = courseID;
     }
 
-    public static SFUCourse createCourseWithComponent(ClassComponent newComponent){
-        SFUCourse newCourse = new SFUCourse(newComponent.getDepartmentName(), newComponent.getCatalogNumber());
+    public static SFUCourse createCourseWithComponent(ClassComponent newComponent, long courseID){
+        SFUCourse newCourse = new SFUCourse(newComponent.getDepartmentName(), newComponent.getCatalogNumber(), courseID);
         newCourse.addNewComponent(newComponent);
         return newCourse;
     }
@@ -31,28 +37,54 @@ public class SFUCourse implements Course {
         boolean componentIsPartOfSection = courseSections.stream()
                 .anyMatch( section -> section.semester == newComponent.getSemester()
                         && section.location.equals(newComponent.getLocation())
-                        && section.instructor.equals(newComponent.getInstructor()) );
+                        && section.instructors.equals(newComponent.getInstructors()) );
         if(componentIsPartOfSection){
             courseSections.stream()
                     .filter( section -> section.semester == newComponent.getSemester()
                             && section.location.equals(newComponent.getLocation())
-                            && section.instructor.equals(newComponent.getInstructor()) )
+                            && section.instructors.equals(newComponent.getInstructors()) )
                     .forEach(section -> section.addNewComponent(newComponent));
         } else{     //If the component doesn't belong to any section stored, create a new one and add it
-            courseSections.add(CourseSection.CreateNewSectionWithComponent(newComponent));
+            indexOfLastSection++;
+            courseSections.add(CourseSection.CreateNewSectionWithComponent(newComponent, indexOfLastSection));
             courseSections.sort(new CourseSection());
         }
     }
 
-
-
     @Override
-    public String getDepartmentName() {
-        return departmentName;
+    public String getDEPARTMENT_NAME() {
+        return DEPARTMENT_NAME;
     }
 
     @Override
-    public String getCatalogNumber() {
-        return catalogNumber;
+    public void printSections() {
+        System.out.println(DEPARTMENT_NAME + " " + CATALOG_NUMBER);
+        for(CourseSection currentSection: courseSections){
+            currentSection.printAllComponents();
+        }
+    }
+
+    @Override
+    public String getCATALOG_NUMBER() {
+        return CATALOG_NUMBER;
+    }
+
+    @Override
+    public long getCOURSE_ID() {
+        return COURSE_ID;
+    }
+
+    @Override
+    public Iterator<? extends ClassComponent> getCourseOfferingComponents(long courseOfferingID) {
+        try{
+            return courseSections.get((int)courseOfferingID).getAllComponents();
+        } catch (IndexOutOfBoundsException err){
+            throw new RuntimeException("Error: Course offering/section not found");
+        }
+    }
+
+    @Override
+    public Iterator<? extends Section> getAllCourseOfferings() {
+        return courseSections.iterator();
     }
 }

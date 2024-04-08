@@ -20,7 +20,7 @@
 
         <h1>OPTIONAL FEATURE</h1>
         <h2>Department
-            <select v-a5_backend.model="selectedDept">
+            <select v-model="selectedDept">
                 <option v-for="option in departments" :value="option">
                     {{ option.name }}
                 </option>

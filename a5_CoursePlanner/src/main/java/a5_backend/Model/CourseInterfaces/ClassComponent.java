@@ -1,5 +1,7 @@
 package a5_backend.Model.CourseInterfaces;
 
+import java.util.List;
+
 public interface ClassComponent {
 
     int getCapacity();
@@ -10,11 +12,13 @@ public interface ClassComponent {
 
     String getCatalogNumber();
 
-    String getInstructor();
+    List<String> getInstructors();
 
     String getLocation();
 
     int getSemester();
 
     String getComponentCode();
+
+    String getInstructorsAsString();
 }
