@@ -51,7 +51,6 @@ public class SFUDepartmentController {
         return departments;
     }
 
-
     @GetMapping("/api/departments/{departmentID}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable double departmentID) {
         Department department = sfuDepartmentService.getDepartment(departmentID);
