@@ -23,7 +23,7 @@ import java.util.List;
 public class SFUDepartmentController {
 
     private final SFUDepartmentService sfuDepartmentService;
-    private final a5_backend.Controllers.SFUDepartmentController SFUDepartmentController;
+    //private final a5_backend.Controllers.SFUDepartmentController SFUDepartmentController;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     static class BadRequest extends RuntimeException {
@@ -40,9 +40,9 @@ public class SFUDepartmentController {
     }
 
     @Autowired
-    public SFUDepartmentController(SFUDepartmentService sfuDepartmentService, SFUDepartmentController SFUDepartmentController) {
+    public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
         this.sfuDepartmentService = sfuDepartmentService;
-        this.SFUDepartmentController = SFUDepartmentController;
+        //this.SFUDepartmentController = SFUDepartmentController;
     }
 
     @GetMapping("/api/departments")

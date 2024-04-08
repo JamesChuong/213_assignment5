@@ -34,8 +34,8 @@ public class SFUDepartmentService {
         List<ApiDepartmentDTO> departmentDTOs = new ArrayList<>();
         Iterator<? extends Department<SFUCourse>> allDepartments = sfuDepartmentList.getAllDepartments();
         while(allDepartments.hasNext()) {
-            Department<SFUCourse> department = allDepartments.next();
-            // TODO: implement this
+            ApiDepartmentDTO newDepartment = new ApiDepartmentDTO(allDepartments.next().getName(), allDepartments.next().hashCode())
+            departmentDTOs.add((ApiDepartmentDTO) allDepartments.next());
 
         }
         return departmentDTOs;
