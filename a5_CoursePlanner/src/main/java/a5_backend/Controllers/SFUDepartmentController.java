@@ -45,7 +45,6 @@ public class SFUDepartmentController {
         this.sfuDepartmentService = sfuDepartmentService;
     }
 
-
     @GetMapping("/api/departments")
     public List<ApiDepartmentDTO> getAllDepartments() {
         List<ApiDepartmentDTO> departments = sfuDepartmentService.getAllDepartments();
