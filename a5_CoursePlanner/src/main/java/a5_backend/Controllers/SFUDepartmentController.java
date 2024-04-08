@@ -24,6 +24,8 @@ import java.util.List;
 @RestController
 public class SFUDepartmentController {
 
+    private final SFUDepartmentService sfuDepartmentService;
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     static class BadRequest extends RuntimeException {
         public BadRequest(String ErrorMsg){
@@ -37,8 +39,6 @@ public class SFUDepartmentController {
             super(ErrorMsg);
         }
     }
-
-    private final SFUDepartmentService sfuDepartmentService;
 
     @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
