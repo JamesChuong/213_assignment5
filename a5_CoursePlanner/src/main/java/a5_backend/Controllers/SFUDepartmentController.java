@@ -10,10 +10,7 @@ import a5_backend.Services.SFUDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -66,6 +63,9 @@ public class SFUDepartmentController {
     private <T, k> List<T> getListFromDepartment(double departmentID, CourseAttributeListBuilder<T, k> filter){
         try {
             Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
+            if(department == null) {
+                throw new RequestNotFound("Department with ID " + departmentID + " not found.");
+            }
             List<T> DTOList = new ArrayList<>();
             Iterator<? extends k> courseAttributeIterator = filter.getDTOIterator(department);
             while(courseAttributeIterator.hasNext()){
@@ -80,17 +80,24 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses")
     public List<ApiCourseDTO> getDepartmentCourses(@PathVariable double departmentID){
+        System.out.println(departmentID);
+        // Check if department exists, otherwise throw an exception
+        Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
+        if (department == null) {
+            throw new RequestNotFound("Department with ID " + departmentID + " not found.");
+        }
+        // Department exists
         CourseAttributeListBuilder<ApiCourseDTO, Course> CourseDTOFilter = new CourseAttributeListBuilder<>() {
             @Override
             public Iterator<? extends Course> getDTOIterator(Department<SFUCourse> newDepartment) {
-                Iterator<? extends Course> courseIterator = newDepartment.getAllCourses();
-                return courseIterator;
+                return newDepartment.getAllCourses();
             }
             @Override
             public ApiCourseDTO createDTO(Course newCourseAttribute) {
                 return ApiCourseDTO.createNewCourseDTO(newCourseAttribute);
             }
         };
+
         return getListFromDepartment(departmentID, CourseDTOFilter);
     }
 

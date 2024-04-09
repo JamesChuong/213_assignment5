@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class SFUDepartmentList implements DepartmentList {
+    // The first 14 entries of the old allDepartmentsAtSFU since it fills it 24 times
+    private final HashMap<Double, Department<SFUCourse>> fakeDepartmentsAtSFU = new HashMap<>();
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
     private final HashMap<Double, Department<SFUCourse>> allDepartmentsAtSFU = new HashMap<>();
@@ -75,10 +77,15 @@ public class SFUDepartmentList implements DepartmentList {
     // adds that course component to the new department.
     private void addComponent(ClassComponent newComponent){
         String departmentName = newComponent.getDepartmentName();
-        Department<SFUCourse> department = allDepartmentsAtSFU.get(hashingFunction(departmentName));
+        double hashValue = hashingFunction(departmentName);
+        Department<SFUCourse> department = allDepartmentsAtSFU.get(hashValue);
         if (department == null) {
             department = new SFUDepartment(departmentName);
-            allDepartmentsAtSFU.put(hashingFunction(departmentName), department);
+            allDepartmentsAtSFU.put(hashValue, department);
+            System.out.println("I put this: " + allDepartmentsAtSFU.get(hashValue).hashCode());
+            System.out.println(allDepartmentsAtSFU.size());
+            System.out.println(allDepartmentsAtSFU.values());
+            System.out.println(allDepartmentsAtSFU.keySet());
         }
         department.addNewComponent(newComponent);
     }
@@ -95,11 +102,13 @@ public class SFUDepartmentList implements DepartmentList {
         return hashCode;
     }
 
+    /*
     private void createNewDepartment(String departmentName, ClassComponent newComponent){
         Department<SFUCourse> newSFUDepartment = new SFUDepartment(departmentName);
         newSFUDepartment.addNewComponent(newComponent);
         allDepartmentsAtSFU.put(hashingFunction(departmentName), newSFUDepartment);
     }
+     */
 
     @Override
     public void printCSVFile() {
@@ -111,11 +120,23 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public Department<SFUCourse> getDepartment(double departmentID){
+        /*
         Department<SFUCourse> retreivedDepartment = allDepartmentsAtSFU.get(departmentID);
+        System.out.println(allDepartmentsAtSFU.get(departmentID));
+        System.out.println(departmentID);
+        /* SFUDepartmentList shouldn't throw exceptions, SFUDepartmentService should
         if(retreivedDepartment == null){
             throw new RuntimeException("Error: Department not found");
-        }
+
         return retreivedDepartment;
+        */
+
+        Double key = departmentID;
+        Department<SFUCourse> retrievedDepartment = allDepartmentsAtSFU.get(key);
+        System.out.println("Retrieved Department: " + retrievedDepartment);
+        System.out.println("Department ID: " + key);
+        return retrievedDepartment;
+
     }
 
     @Override
