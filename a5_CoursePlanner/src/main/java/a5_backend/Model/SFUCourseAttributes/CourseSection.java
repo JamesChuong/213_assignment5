@@ -9,7 +9,6 @@ import java.util.List;
 
 public class CourseSection implements Section, Comparator<CourseSection> {
     private final List<ClassComponent> componentList = new ArrayList<>();
-
     //True if a class has other components aside from lectures, like labs, tutorials, etc.
     private boolean hasOtherComponents = false;
     public String department;
@@ -18,7 +17,6 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     public String location;
     public List<String> instructors;
     private long courseOfferingID;
-
     private final int COMPONENT_PADDING = 12;
     private final int SECTION_HEADER_PADDING = 6;
     private final int SPRING_CODE = 1;

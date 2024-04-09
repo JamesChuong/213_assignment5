@@ -29,7 +29,7 @@ public class SFUDepartmentService {
 
     // Gets and returns single SFUDepartment from sfuDepartmentList
     public Department<SFUCourse> getDepartment(double departmentID) {
-        System.out.println(departmentID);
+        //System.out.println(departmentID);
         return sfuDepartmentList.getDepartment(departmentID);
     }
 

@@ -80,12 +80,6 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses")
     public List<ApiCourseDTO> getDepartmentCourses(@PathVariable long departmentID){
-        // Check if department exists, otherwise throw an exception
-        Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
-        if (department == null) {
-            throw new RequestNotFound("Department with ID " + departmentID + " not found.");
-        }
-        // Department exists
         CourseAttributeListBuilder<ApiCourseDTO, Course> CourseDTOFilter = new CourseAttributeListBuilder<>() {
             @Override
             public Iterator<? extends Course> getDTOIterator(Department<SFUCourse> newDepartment) {
@@ -102,7 +96,7 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings/{courseOfferingID}")
     public List<ApiOfferingSectionDTO> getCourseOfferingComponents(@PathVariable long departmentID
-            , @PathVariable long courseID, long courseOfferingID){
+            , @PathVariable long courseID, @PathVariable long courseOfferingID){
         CourseAttributeListBuilder<ApiOfferingSectionDTO, ClassComponent> componentList
                 = new CourseAttributeListBuilder<>() {
             @Override

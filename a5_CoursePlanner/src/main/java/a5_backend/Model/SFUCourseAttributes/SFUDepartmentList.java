@@ -9,8 +9,9 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class SFUDepartmentList implements DepartmentList {
+
     // The first 14 entries of the old allDepartmentsAtSFU since it fills it 24 times
-    private final List<Double> HashList = new ArrayList<>();
+    private final List<Double> hashValuesList = new ArrayList<>();
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
     private final HashMap<Double, Department<SFUCourse>> allDepartmentsAtSFU = new HashMap<>();
@@ -77,15 +78,17 @@ public class SFUDepartmentList implements DepartmentList {
     // adds that course component to the new department.
     private void addComponent(ClassComponent newComponent){
         String departmentName = newComponent.getDepartmentName();
-        double hashValue = hashingFunction(departmentName);
-        Department<SFUCourse> department = allDepartmentsAtSFU.get(hashValue);
-        if (department == null) {
-            System.out.println(departmentName);
-            System.out.println(hashValue);
+        Double hashValue = hashingFunction(departmentName);
+        Department<SFUCourse> department;
+        if (!allDepartmentsAtSFU.containsKey(hashValue)) {
             department = new SFUDepartment(departmentName);
             allDepartmentsAtSFU.put(hashValue, department);
-            //System.out.println("I put this: " + allDepartmentsAtSFU.get(hashValue).getName());
+            hashValuesList.add(hashValue);
+            department.addNewComponent(newComponent);
+            department.setHashValue(hashValue);
+            return;
         }
+        department = allDepartmentsAtSFU.get(hashValue);
         department.addNewComponent(newComponent);
         department.setHashValue(hashValue);
     }
@@ -130,14 +133,19 @@ public class SFUDepartmentList implements DepartmentList {
 
         return retreivedDepartment;
         */
-        Double key = departmentID;
-        Department<SFUCourse> retrievedDepartment = allDepartmentsAtSFU.get(key.hashCode());
-        for(int i = 0; i < allDepartmentsAtSFU.size(); i++) {
 
+        Double key = departmentID;
+        Department<SFUCourse> retrievedDepartment = null;
+        for(Double hashValue : hashValuesList) {
+            //System.out.println("The current hashvalue is: " + allDepartmentsAtSFU.get(hashValue).hashCode());
+            if (allDepartmentsAtSFU.get(hashValue).hashCode() == key.intValue()) {
+                //System.out.println("true: " + allDepartmentsAtSFU.get(hashValue).hashCode() + " " + key);
+                retrievedDepartment = allDepartmentsAtSFU.get(hashValue);
+            }
         }
-        System.out.println("Retrieved Department: " + retrievedDepartment);
-        System.out.println("Department ID: " + departmentID);
-        System.out.println("key: " + key);
+        //System.out.println("Retrieved Department: " + retrievedDepartment);
+        //System.out.println("Department ID: " + departmentID);
+        //System.out.println("key: " + key.intValue());
         return retrievedDepartment;
 
     }
