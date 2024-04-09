@@ -88,6 +88,7 @@ public class SFUDepartmentList implements DepartmentList {
             System.out.println(allDepartmentsAtSFU.keySet());
         }
         department.addNewComponent(newComponent);
+        department.setHashValue(hashValue);
     }
 
     //Maps department names to a unique key using a polynomial hashing technique

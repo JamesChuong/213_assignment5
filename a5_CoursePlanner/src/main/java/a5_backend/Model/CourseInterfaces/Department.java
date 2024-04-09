@@ -24,4 +24,6 @@ public interface Department<T extends Course> {
     void printAllCourseOfferings();
 
     String getName();
+
+    void setHashValue(double hashValue);
 }

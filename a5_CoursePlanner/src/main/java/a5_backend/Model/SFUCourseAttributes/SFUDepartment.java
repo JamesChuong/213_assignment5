@@ -15,6 +15,7 @@ public class SFUDepartment implements Department<SFUCourse> {
 
     //Maps a course to its course ID, course IDs are assigned via a hashing function
     private final HashMap<Long, Course> courseList = new HashMap<>();
+    private double hashValue;
 
     private Course findCourse(long courseID){
         Course retreivedCourse = courseList.get(courseID);
@@ -73,6 +74,11 @@ public class SFUDepartment implements Department<SFUCourse> {
     @Override
     public String getName() {
         return this.departmentName;
+    }
+
+    @Override
+    public void setHashValue(double hashValue) {
+        this.hashValue = hashValue;
     }
 
 
