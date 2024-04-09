@@ -10,7 +10,7 @@ import java.util.*;
 
 public class SFUDepartmentList implements DepartmentList {
     // The first 14 entries of the old allDepartmentsAtSFU since it fills it 24 times
-    private final HashMap<Double, Department<SFUCourse>> fakeDepartmentsAtSFU = new HashMap<>();
+    private final List<Double> HashList = new ArrayList<>();
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
     private final HashMap<Double, Department<SFUCourse>> allDepartmentsAtSFU = new HashMap<>();
@@ -131,11 +131,14 @@ public class SFUDepartmentList implements DepartmentList {
 
         return retreivedDepartment;
         */
-
         Double key = departmentID;
-        Department<SFUCourse> retrievedDepartment = allDepartmentsAtSFU.get(key);
+        Department<SFUCourse> retrievedDepartment = allDepartmentsAtSFU.get(key.hashCode());
+        for(int i = 0; i < allDepartmentsAtSFU.size(); i++) {
+
+        }
         System.out.println("Retrieved Department: " + retrievedDepartment);
-        System.out.println("Department ID: " + key);
+        System.out.println("Department ID: " + departmentID);
+        System.out.println("key: " + key);
         return retrievedDepartment;
 
     }
