@@ -137,15 +137,15 @@ public class SFUDepartmentList implements DepartmentList {
         Double key = departmentID;
         Department<SFUCourse> retrievedDepartment = null;
         for(Double hashValue : hashValuesList) {
-            System.out.println("The current hashvalue is: " + hashValue);
-            if (hashValue.doubleValue() == key.doubleValue()) {
+            System.out.println("The current hashvalue is: " + allDepartmentsAtSFU.get(hashValue).hashCode());
+            if (allDepartmentsAtSFU.get(hashValue).hashCode() == key.intValue()) {
                 System.out.println("true: " + allDepartmentsAtSFU.get(hashValue).hashCode() + " " + key);
                 retrievedDepartment = allDepartmentsAtSFU.get(hashValue);
             }
         }
         System.out.println("Retrieved Department: " + retrievedDepartment);
         System.out.println("Department ID: " + departmentID);
-        System.out.println("key: " + key);
+        System.out.println("key: " + key.intValue());
         return retrievedDepartment;
 
     }
