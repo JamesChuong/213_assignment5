@@ -60,7 +60,7 @@ public class SFUDepartmentController {
     //Generic method for obtaining a list of course attributes (courses, sections/offerings, and components)
     //Has 2 type parameters, T and k, k represents the course attribute we want a list of, and T is the
     //corresponding DTO for attribute k.
-    private <T, k> List<T> getListFromDepartment(double departmentID, CourseAttributeListBuilder<T, k> filter){
+    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter){
         try {
             Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
             if(department == null) {
@@ -79,8 +79,7 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("api/departments/{departmentID}/courses")
-    public List<ApiCourseDTO> getDepartmentCourses(@PathVariable double departmentID){
-        System.out.println(departmentID);
+    public List<ApiCourseDTO> getDepartmentCourses(@PathVariable long departmentID){
         // Check if department exists, otherwise throw an exception
         Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
         if (department == null) {
@@ -122,7 +121,7 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings")
-    public List<ApiCourseOfferingDTO> getAllCourseOfferings(@PathVariable double departmentID
+    public List<ApiCourseOfferingDTO> getAllCourseOfferings(@PathVariable long departmentID
             , @PathVariable long courseID){
         CourseAttributeListBuilder<ApiCourseOfferingDTO, Section> courseOfferingList =
                 new CourseAttributeListBuilder<>() {

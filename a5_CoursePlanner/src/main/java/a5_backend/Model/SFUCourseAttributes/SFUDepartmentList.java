@@ -80,12 +80,11 @@ public class SFUDepartmentList implements DepartmentList {
         double hashValue = hashingFunction(departmentName);
         Department<SFUCourse> department = allDepartmentsAtSFU.get(hashValue);
         if (department == null) {
+            System.out.println(departmentName);
+            System.out.println(hashValue);
             department = new SFUDepartment(departmentName);
             allDepartmentsAtSFU.put(hashValue, department);
-            System.out.println("I put this: " + allDepartmentsAtSFU.get(hashValue).hashCode());
-            System.out.println(allDepartmentsAtSFU.size());
-            System.out.println(allDepartmentsAtSFU.values());
-            System.out.println(allDepartmentsAtSFU.keySet());
+            //System.out.println("I put this: " + allDepartmentsAtSFU.get(hashValue).getName());
         }
         department.addNewComponent(newComponent);
         department.setHashValue(hashValue);
