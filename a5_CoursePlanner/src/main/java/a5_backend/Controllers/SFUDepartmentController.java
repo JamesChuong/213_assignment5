@@ -36,6 +36,7 @@ public class SFUDepartmentController {
         }
     }
 
+
     @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
         this.sfuDepartmentService = sfuDepartmentService;
