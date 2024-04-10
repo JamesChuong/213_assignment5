@@ -152,10 +152,10 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public Iterator<? extends Department<SFUCourse>> getAllDepartments() {
-        List<Department<SFUCourse>> departments = new ArrayList<>();
-        for(Map.Entry<Double, Department<SFUCourse>> entry : allDepartmentsAtSFU.entrySet()){
-            departments.add(entry.getValue());
-        }
+        List<Department<SFUCourse>> departments = new ArrayList<>(allDepartmentsAtSFU.values());
+        Comparator<Department<SFUCourse>> comparator = Comparator.comparing(Department::getName);
+        departments.sort(comparator);
+
         return departments.iterator();
     }
 }

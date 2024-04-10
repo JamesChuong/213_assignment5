@@ -6,9 +6,7 @@ import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.Section;
 
 import java.lang.Math;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class SFUDepartment implements Department<SFUCourse> {
     private final String departmentName;
@@ -91,7 +89,11 @@ public class SFUDepartment implements Department<SFUCourse> {
 
     @Override
     public Iterator<? extends Course> getAllCourses() {
-        return courseList.values().iterator();
+        List<Course> sortedCourses = new ArrayList<>(courseList.values());
+
+        Comparator<Course> comparator = Comparator.comparing(Course::getCATALOG_NUMBER);
+        sortedCourses.sort(comparator);
+        return sortedCourses.iterator();
     }
 
     @Override

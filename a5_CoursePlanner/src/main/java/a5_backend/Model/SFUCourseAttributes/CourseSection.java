@@ -142,7 +142,11 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
     @Override
     public Iterator<? extends ClassComponent> getAllComponents() {
-        return componentList.iterator();
+        Comparator<ClassComponent> comparator = Comparator.comparing(ClassComponent::getComponentCode)
+                .thenComparing(ClassComponent::getEnrollmentTotal);
+        List<ClassComponent> sortedComponents = new ArrayList<>(componentList);
+        sortedComponents.sort(comparator);
+        return sortedComponents.iterator();
     }
 
     @Override
