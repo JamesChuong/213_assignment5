@@ -3,6 +3,7 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Section;
+import a5_backend.Watchers.CourseObserver;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,6 +19,8 @@ public class SFUCourse implements Course {
     private int indexOfLastSection = -1;
 
     private final List<CourseSection> courseSections = new ArrayList<>(){};
+
+    private final List<CourseObserver> observers = new ArrayList<>(){};
 
     public SFUCourse(String departmentName, String catalogNumber, long courseID){
         this.DEPARTMENT_NAME = departmentName;
@@ -38,6 +41,7 @@ public class SFUCourse implements Course {
                 .anyMatch( section -> section.semester == newComponent.getSemester()
                         && section.location.equals(newComponent.getLocation())
                         && section.instructors.equals(newComponent.getInstructors()) );
+        observers.forEach(observers -> observers.updateEvents(newComponent));
         if(componentIsPartOfSection){
             courseSections.stream()
                     .filter( section -> section.semester == newComponent.getSemester()
@@ -52,7 +56,7 @@ public class SFUCourse implements Course {
     }
 
     @Override
-    public String getDEPARTMENT_NAME() {
+    public String getDepartmentname() {
         return DEPARTMENT_NAME;
     }
 
@@ -65,12 +69,12 @@ public class SFUCourse implements Course {
     }
 
     @Override
-    public String getCATALOG_NUMBER() {
+    public String getCatalogNumber() {
         return CATALOG_NUMBER;
     }
 
     @Override
-    public long getCOURSE_ID() {
+    public long getCourseID() {
         return COURSE_ID;
     }
 
@@ -87,4 +91,10 @@ public class SFUCourse implements Course {
     public Iterator<? extends Section> getAllCourseOfferings() {
         return courseSections.iterator();
     }
+
+    @Override
+    public void addObserver(CourseObserver newObserver) {
+        observers.add(newObserver);
+    }
+
 }

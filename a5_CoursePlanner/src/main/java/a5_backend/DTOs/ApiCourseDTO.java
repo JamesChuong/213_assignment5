@@ -9,8 +9,8 @@ public class ApiCourseDTO {
 
     public static ApiCourseDTO createNewCourseDTO(Course newCourse){
         ApiCourseDTO newCourseDTO = new ApiCourseDTO();
-        newCourseDTO.courseId = newCourse.getCOURSE_ID();
-        newCourseDTO.catalogNumber = newCourse.getCATALOG_NUMBER();
+        newCourseDTO.courseId = newCourse.getCourseID();
+        newCourseDTO.catalogNumber = newCourse.getCatalogNumber();
         return newCourseDTO;
     }
 }

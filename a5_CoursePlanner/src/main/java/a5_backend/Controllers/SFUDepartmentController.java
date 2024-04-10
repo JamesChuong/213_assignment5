@@ -49,6 +49,7 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("/api/departments/{departmentID}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Department<SFUCourse>> getDepartmentById(@PathVariable double departmentID) {
         Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
         if (department == null) {
@@ -79,6 +80,7 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("api/departments/{departmentID}/courses")
+    @ResponseStatus(HttpStatus.OK)
     public List<ApiCourseDTO> getDepartmentCourses(@PathVariable long departmentID){
         CourseAttributeListBuilder<ApiCourseDTO, Course> CourseDTOFilter = new CourseAttributeListBuilder<>() {
             @Override
@@ -95,6 +97,7 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings/{courseOfferingID}")
+    @ResponseStatus(HttpStatus.OK)
     public List<ApiOfferingSectionDTO> getCourseOfferingComponents(@PathVariable long departmentID
             , @PathVariable long courseID, @PathVariable long courseOfferingID){
         CourseAttributeListBuilder<ApiOfferingSectionDTO, ClassComponent> componentList
@@ -115,6 +118,7 @@ public class SFUDepartmentController {
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings")
+    @ResponseStatus(HttpStatus.OK)
     public List<ApiCourseOfferingDTO> getAllCourseOfferings(@PathVariable long departmentID
             , @PathVariable long courseID){
         CourseAttributeListBuilder<ApiCourseOfferingDTO, Section> courseOfferingList =

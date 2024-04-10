@@ -5,6 +5,7 @@ import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
 import a5_backend.Model.SFUCourseAttributes.SFUCourse;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
+import a5_backend.Watchers.Watcher;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,10 @@ public class SFUDepartmentService {
             departmentDTOs.add(newApiDepartmentDTO);
         }
         return departmentDTOs;
+    }
+
+    public void addNewObserver(Watcher newWatcher){
+
     }
 
     public void dumpModel(){
