@@ -91,7 +91,7 @@ public class SFUDepartment implements Department<SFUCourse> {
     public Iterator<? extends Course> getAllCourses() {
         List<Course> sortedCourses = new ArrayList<>(courseList.values());
 
-        Comparator<Course> comparator = Comparator.comparing(Course::getCATALOG_NUMBER);
+        Comparator<Course> comparator = Comparator.comparing(Course::getCatalogNumber);
         sortedCourses.sort(comparator);
         return sortedCourses.iterator();
     }
