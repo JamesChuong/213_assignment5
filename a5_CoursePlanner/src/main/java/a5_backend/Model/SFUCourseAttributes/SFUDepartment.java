@@ -96,17 +96,22 @@ public class SFUDepartment implements Department<SFUCourse> {
 
     @Override
     public Iterator<? extends Course> getAllCourses() {
+        /*
         List<Course> sortedCourses = new ArrayList<>(courseList.values());
 
         Comparator<Course> comparator = Comparator.comparing(Course::getCatalogNumber);
         sortedCourses.sort(comparator);
         return sortedCourses.iterator();
+
+         */
+        return courseList.values().iterator();
     }
 
     @Override
     public Iterator<? extends ClassComponent> getAllCourseOfferingSections(long courseID, long courseOfferingID) {
         Course retreivedCourse = findCourse(courseID);
         Iterator<? extends ClassComponent> allCourseOfferings = retreivedCourse.getCourseOfferingComponents(courseOfferingID);
+        System.out.println(allCourseOfferings.next().getInstructorsAsString());
         return allCourseOfferings;
     }
 }

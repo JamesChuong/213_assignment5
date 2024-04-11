@@ -142,15 +142,20 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
     @Override
     public Iterator<? extends ClassComponent> getAllComponents() {
-        Comparator<ClassComponent> comparator = Comparator.comparing(ClassComponent::getComponentCode)
+
+        /*Comparator<ClassComponent> comparator = Comparator.comparing(ClassComponent::getComponentCode)
                 .thenComparing(ClassComponent::getEnrollmentTotal);
         List<ClassComponent> sortedComponents = new ArrayList<>(componentList);
         sortedComponents.sort(comparator);
         return sortedComponents.iterator();
+         */
+        return componentList.iterator();
     }
+
 
     @Override
     public int compare(CourseSection o1, CourseSection o2) {
+        /*
         if ( o1.getLocation().equals( o2.getLocation() ) ){
             if(o1.semester == o2.semester){
                 return o1.instructors.getFirst().compareTo(o2.instructors.getFirst());
@@ -160,6 +165,8 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         } else {
             return o1.location.compareTo(o2.location);
         }
-    }
 
+         */
+        return 0;
+    }
 }
