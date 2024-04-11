@@ -144,6 +144,9 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     public Iterator<? extends ClassComponent> getAllComponents() {
         Comparator<ClassComponent> comparator = Comparator.comparing(ClassComponent::getComponentCode)
                 .thenComparing(ClassComponent::getEnrollmentTotal);
+        for(ClassComponent component: componentList){
+            System.out.println(component.getInstructors());
+        }
         List<ClassComponent> sortedComponents = new ArrayList<>(componentList);
         sortedComponents.sort(comparator);
         return sortedComponents.iterator();

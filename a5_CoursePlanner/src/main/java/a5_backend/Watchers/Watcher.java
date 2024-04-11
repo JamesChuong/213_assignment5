@@ -8,6 +8,10 @@ public interface Watcher {
 
     long getID();
 
+    long getDepartmentID();
+
+    long getCourseID();
+
 
 
 }

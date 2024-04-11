@@ -30,6 +30,7 @@ public class SFUCourseComponent implements ClassComponent {
         this.semester = semester;
         this.componentCode = componentType;
     }
+
     @Override
     public int getCapacity() {return capacity;}
     @Override
