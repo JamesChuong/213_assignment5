@@ -21,6 +21,4 @@ public class ApiCourseOfferingDTO {
         return newOfferingDTO;
     }
 
-    public long getSemesterCode() { return this.semesterCode; }
-
 }
