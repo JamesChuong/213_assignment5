@@ -80,11 +80,14 @@ public class SFUCourse implements Course {
 
     @Override
     public Iterator<? extends ClassComponent> getCourseOfferingComponents(long courseOfferingID) {
-        try{
-            return courseSections.get((int)courseOfferingID).getAllComponents();
-        } catch (IndexOutOfBoundsException err){
+            for(Section section: courseSections){
+                if(section.getCourseOfferingID() == courseOfferingID){
+                    return section.getAllComponents();
+                }
+            }
             throw new RuntimeException("Error: Course offering/section not found");
-        }
+
+
     }
 
     @Override
