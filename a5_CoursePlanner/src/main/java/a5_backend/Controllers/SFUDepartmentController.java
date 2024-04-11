@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class SFUDepartmentController {
     //Generic method for obtaining a list of course attributes (courses, sections/offerings, and components)
     //Has 2 type parameters, T and k, k represents the course attribute we want a list of, and T is the
     //corresponding DTO for attribute k.
-    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter){
+    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter, Comparator<T> comparator){
         try {
             Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
             if(department == null) {
@@ -72,8 +73,12 @@ public class SFUDepartmentController {
             Iterator<? extends k> courseAttributeIterator = filter.getDTOIterator(department);
             while(courseAttributeIterator.hasNext()){
                 k currentObject = courseAttributeIterator.next();
-                DTOList.add(filter.createDTO(currentObject));
+                T dto = filter.createDTO(currentObject);
+                DTOList.add(dto);
             }
+
+            DTOList.sort(comparator);
+
             return DTOList;
         } catch (RuntimeException AttributeNotFound){
             throw new BadRequest(AttributeNotFound.getMessage());
@@ -94,7 +99,8 @@ public class SFUDepartmentController {
             }
         };
 
-        return getListFromDepartment(departmentID, CourseDTOFilter);
+        Comparator<ApiCourseDTO> comparator = Comparator.comparing(ApiCourseDTO::getCatalogNumber);
+        return getListFromDepartment(departmentID, CourseDTOFilter, comparator);
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings/{courseOfferingID}")
@@ -115,7 +121,9 @@ public class SFUDepartmentController {
                 return ApiOfferingSectionDTO.createSectionDTO(newCourseAttribute);
             }
         };
-        return getListFromDepartment(departmentID, componentList);
+
+        Comparator<ApiOfferingSectionDTO> comparator = Comparator.comparing(ApiOfferingSectionDTO::getType);
+        return getListFromDepartment(departmentID, componentList, comparator);
     }
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings")
@@ -135,12 +143,15 @@ public class SFUDepartmentController {
                 return ApiCourseOfferingDTO.createNewOfferingDTO(newCourseAttribute);
             }
         };
-        return getListFromDepartment(departmentID, courseOfferingList);
+
+        Comparator<ApiCourseOfferingDTO> comparator = Comparator.comparing(ApiCourseOfferingDTO::getSemesterCode);
+        return getListFromDepartment(departmentID, courseOfferingList, comparator);
     }
 
     @PostMapping("api/addoffering")
     @ResponseStatus(HttpStatus.CREATED)
     public void addOffering() {
+
 
     }
 }
