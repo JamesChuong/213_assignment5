@@ -132,9 +132,9 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         tempSemester/=10;
         year += tempSemester%10;
         tempSemester/=10;
-        year += 10*tempSemester%10;
+        year += 10*(tempSemester%10);
         tempSemester/=10;
-        year += 100*tempSemester%10;
+        year += 100*(tempSemester%10);
         year += 1900;
         return year;
     }
