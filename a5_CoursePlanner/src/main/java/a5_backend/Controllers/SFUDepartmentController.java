@@ -137,4 +137,10 @@ public class SFUDepartmentController {
         };
         return getListFromDepartment(departmentID, courseOfferingList);
     }
+
+    @PostMapping("api/addoffering")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addOffering() {
+
+    }
 }
