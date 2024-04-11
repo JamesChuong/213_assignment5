@@ -4,6 +4,7 @@ import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.Section;
+import a5_backend.Watchers.CourseObserver;
 
 import java.lang.Math;
 import java.util.*;
@@ -72,6 +73,12 @@ public class SFUDepartment implements Department<SFUCourse> {
     @Override
     public String getName() {
         return this.departmentName;
+    }
+
+    @Override
+    public void addCourseObserver(long courseID, CourseObserver newObserver) {
+            courseList.get(courseID);
+
     }
 
     @Override

@@ -1,4 +1,6 @@
 package a5_backend.Model.CourseInterfaces;
+import a5_backend.Watchers.CourseObserver;
+
 import java.util.Iterator;
 /**
  * This interface represents a department at SFU, and contains operations for adding new courses or components,
@@ -24,6 +26,8 @@ public interface Department<T extends Course> {
     void printAllCourseOfferings();
 
     String getName();
+
+    void addCourseObserver(long courseID, CourseObserver newObserver);
 
     void setHashValue(double hashValue);
 }
