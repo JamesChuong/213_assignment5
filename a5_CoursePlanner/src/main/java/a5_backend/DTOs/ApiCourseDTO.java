@@ -13,4 +13,8 @@ public class ApiCourseDTO {
         newCourseDTO.catalogNumber = newCourse.getCatalogNumber();
         return newCourseDTO;
     }
+
+    public String getCatalogNumber() {
+        return this.catalogNumber;
+    }
 }

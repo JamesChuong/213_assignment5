@@ -14,4 +14,6 @@ public class ApiOfferingSectionDTO {
         newSectionDTO.enrollmentTotal = newComponent.getEnrollmentTotal();
         return newSectionDTO;
     }
+
+    public String getType() { return this.type; }
 }
