@@ -1,21 +1,20 @@
 package a5_backend.Model.CourseInterfaces;
-import a5_backend.Watchers.CourseObserver;
+import a5_backend.Watchers.Observer;
 
 import java.util.Iterator;
 /**
  * This interface represents a department at SFU, and contains operations for adding new courses or components,
  * listing all offerings of a course which is part of the department, and listing all sections
  *
- * @param <T> An object which implements the Course interface
  */
-public interface Department<T extends Course> {
+public interface Department {
 
     void addNewCourse(Course newCourse);
 
     void addNewComponent(ClassComponent newComponent);
 
     //Return a course with the ID and offering ID
-    T getCourseOffering(long courseID, long courseOfferingID);
+    Course findCourse(long courseID);
 
     Iterator<? extends Section> getAllCourseOfferings(long courseID);
     Iterator<? extends Course> getAllCourses();
@@ -27,7 +26,7 @@ public interface Department<T extends Course> {
 
     String getName();
 
-    void addCourseObserver(long courseID, CourseObserver newObserver);
+    void addCourseObserver(long courseID, Observer newObserver);
 
     void setHashValue(double hashValue);
 }

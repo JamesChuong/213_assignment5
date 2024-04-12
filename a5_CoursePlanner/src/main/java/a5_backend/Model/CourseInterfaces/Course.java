@@ -1,5 +1,5 @@
 package a5_backend.Model.CourseInterfaces;
-import a5_backend.Watchers.CourseObserver;
+import a5_backend.Watchers.Observer;
 
 import java.util.Iterator;
 
@@ -19,6 +19,6 @@ public interface Course {
 
     Iterator<? extends Section> getAllCourseOfferings();
 
-    void addObserver(CourseObserver newObserver);
+    void addObserver(Observer newObserver);
 
 }

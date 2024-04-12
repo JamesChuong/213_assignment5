@@ -4,26 +4,19 @@ import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.Section;
-import a5_backend.Watchers.CourseObserver;
+import a5_backend.Watchers.Observer;
 
 import java.lang.Math;
 import java.util.*;
 
-public class SFUDepartment implements Department<SFUCourse> {
+public class SFUDepartment implements Department {
     private final String departmentName;
 
     //Maps a course to its course ID, course IDs are assigned via a hashing function
     private final HashMap<Long, Course> courseList = new HashMap<>();
     private double hashValue;
 
-    private Course findCourse(long courseID){
-        if(courseList.containsKey(courseID)){
-            Course retreivedCourse = courseList.get(courseID);
-            return retreivedCourse;
-        } else {
-            throw new RuntimeException("Error: Course not found");
-        }
-    }
+
 
     public SFUDepartment(String departmentName) {
         this.departmentName = departmentName;
@@ -57,10 +50,14 @@ public class SFUDepartment implements Department<SFUCourse> {
     }
 
     @Override
-    public SFUCourse getCourseOffering(long courseID, long courseOfferingID) {
-        return null;
+    public Course findCourse(long courseID){
+        if(courseList.containsKey(courseID)){
+            Course retreivedCourse = courseList.get(courseID);
+            return retreivedCourse;
+        } else {
+            throw new RuntimeException("Error: Course not found");
+        }
     }
-
 
 
     @Override
@@ -78,7 +75,7 @@ public class SFUDepartment implements Department<SFUCourse> {
     }
 
     @Override
-    public void addCourseObserver(long courseID, CourseObserver newObserver) {
+    public void addCourseObserver(long courseID, Observer newObserver) {
             courseList.get(courseID);
 
     }

@@ -3,6 +3,8 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
+import a5_backend.Watchers.Observer;
+
 import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +16,7 @@ public class SFUDepartmentList implements DepartmentList {
     private final List<Double> hashValuesList = new ArrayList<>();
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
-    private final HashMap<Double, Department<SFUCourse>> allDepartmentsAtSFU = new HashMap<>();
+    private final HashMap<Double, Department> allDepartmentsAtSFU = new HashMap<>();
     private final int HASH_CONSTANT = 33;
 
     public static SFUDepartmentList createDepartmentListWithCSVFile(String CSVFile){
@@ -84,7 +86,7 @@ public class SFUDepartmentList implements DepartmentList {
     private void addComponent(ClassComponent newComponent){
         String departmentName = newComponent.getDepartmentName();
         Double hashValue = hashingFunction(departmentName);
-        Department<SFUCourse> department;
+        Department department;
         if (!allDepartmentsAtSFU.containsKey(hashValue)) {
             department = new SFUDepartment(departmentName);
             allDepartmentsAtSFU.put(hashValue, department);
@@ -112,7 +114,7 @@ public class SFUDepartmentList implements DepartmentList {
 
     /*
     private void createNewDepartment(String departmentName, ClassComponent newComponent){
-        Department<SFUCourse> newSFUDepartment = new SFUDepartment(departmentName);
+        Department newSFUDepartment = new SFUDepartment(departmentName);
         newSFUDepartment.addNewComponent(newComponent);
         allDepartmentsAtSFU.put(hashingFunction(departmentName), newSFUDepartment);
     }
@@ -120,16 +122,16 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public void printCSVFile() {
-        for (Map.Entry<Double, Department<SFUCourse>> entry : allDepartmentsAtSFU.entrySet()) {
-            Department<SFUCourse> department = entry.getValue();
+        for (Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()) {
+            Department department = entry.getValue();
             department.printAllCourseOfferings();
         }
     }
 
     @Override
-    public Department<SFUCourse> getDepartment(double departmentID){
+    public Department getDepartment(double departmentID){
         /*
-        Department<SFUCourse> retreivedDepartment = allDepartmentsAtSFU.get(departmentID);
+        Department retreivedDepartment = allDepartmentsAtSFU.get(departmentID);
         System.out.println(allDepartmentsAtSFU.get(departmentID));
         System.out.println(departmentID);
         /* SFUDepartmentList shouldn't throw exceptions, SFUDepartmentService should
@@ -140,27 +142,34 @@ public class SFUDepartmentList implements DepartmentList {
         */
 
         Double key = departmentID;
-        Department<SFUCourse> retrievedDepartment = null;
+        Department retrievedDepartment = null;
         for(Double hashValue : hashValuesList) {
             //System.out.println("The current hashvalue is: " + allDepartmentsAtSFU.get(hashValue).hashCode());
             if (allDepartmentsAtSFU.get(hashValue).hashCode() == key.intValue()) {
                 //System.out.println("true: " + allDepartmentsAtSFU.get(hashValue).hashCode() + " " + key);
                 retrievedDepartment = allDepartmentsAtSFU.get(hashValue);
+                return retrievedDepartment;
             }
         }
+        throw new RuntimeException("Error: Department not found");
         //System.out.println("Retrieved Department: " + retrievedDepartment);
         //System.out.println("Department ID: " + departmentID);
         //System.out.println("key: " + key.intValue());
-        return retrievedDepartment;
 
     }
 
     @Override
-    public Iterator<? extends Department<SFUCourse>> getAllDepartments() {
-        List<Department<SFUCourse>> departments = new ArrayList<>(allDepartmentsAtSFU.values());
-        Comparator<Department<SFUCourse>> comparator = Comparator.comparing(Department::getName);
+    public Iterator<? extends Department> getAllDepartments() {
+        List<Department> departments = new ArrayList<>(allDepartmentsAtSFU.values());
+        Comparator<Department> comparator = Comparator.comparing(Department::getName);
         departments.sort(comparator);
-
         return departments.iterator();
+    }
+
+    @Override
+    public void addNewObserver(long departmentID, long courseID, Observer newObserver) {
+        Department retreivedDepartment = getDepartment(departmentID);
+        retreivedDepartment.findCourse(courseID)
+                .addObserver(newObserver);
     }
 }

@@ -1,10 +1,11 @@
 package a5_backend.Watchers;
 
-import java.util.Iterator;
+
+import java.util.List;
 
 public interface Watcher {
 
-    Iterator<String> getListOfChanges();
+    List<String> getListOfChanges();
 
     long getID();
 
@@ -12,6 +13,8 @@ public interface Watcher {
 
     long getCourseID();
 
+    Observer getObserver();
 
+    String getLatestEvent();
 
 }

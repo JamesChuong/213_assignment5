@@ -5,7 +5,6 @@ import a5_backend.DTOs.ApiCourseOfferingDTO;
 import a5_backend.DTOs.ApiDepartmentDTO;
 import a5_backend.DTOs.ApiOfferingSectionDTO;
 import a5_backend.Model.CourseInterfaces.*;
-import a5_backend.Model.SFUCourseAttributes.SFUCourse;
 import a5_backend.Services.SFUDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import java.util.List;
 @RestController
 public class SFUDepartmentController {
 
-    private final SFUDepartmentService sfuDepartmentService;
+    private final SFUDepartmentService DEPARTMENT_MANAGER;
     //private final a5_backend.Controllers.SFUDepartmentController SFUDepartmentController;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -40,20 +39,20 @@ public class SFUDepartmentController {
 
     @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
-        this.sfuDepartmentService = sfuDepartmentService;
+        this.DEPARTMENT_MANAGER = sfuDepartmentService;
         //this.SFUDepartmentController = SFUDepartmentController;
     }
 
     @GetMapping("/api/departments")
     public List<ApiDepartmentDTO> getAllDepartments() {
-        List<ApiDepartmentDTO> departments = sfuDepartmentService.getAllDepartments();
+        List<ApiDepartmentDTO> departments = DEPARTMENT_MANAGER.getAllDepartments();
         return departments;
     }
 
     @GetMapping("/api/departments/{departmentID}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Department<SFUCourse>> getDepartmentById(@PathVariable double departmentID) {
-        Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
+    public ResponseEntity<Department> getDepartmentById(@PathVariable double departmentID) {
+        Department department = DEPARTMENT_MANAGER.getDepartment(departmentID);
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -65,7 +64,7 @@ public class SFUDepartmentController {
     //corresponding DTO for attribute k.
     private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter, Comparator<T> comparator){
         try {
-            Department<SFUCourse> department = sfuDepartmentService.getDepartment(departmentID);
+            Department department = DEPARTMENT_MANAGER.getDepartment(departmentID);
             if(department == null) {
                 throw new RequestNotFound("Department with ID " + departmentID + " not found.");
             }
@@ -90,7 +89,7 @@ public class SFUDepartmentController {
     public List<ApiCourseDTO> getDepartmentCourses(@PathVariable long departmentID){
         CourseAttributeListBuilder<ApiCourseDTO, Course> CourseDTOFilter = new CourseAttributeListBuilder<>() {
             @Override
-            public Iterator<? extends Course> getDTOIterator(Department<SFUCourse> newDepartment) {
+            public Iterator<? extends Course> getDTOIterator(Department newDepartment) {
                 return newDepartment.getAllCourses();
             }
             @Override
@@ -110,7 +109,7 @@ public class SFUDepartmentController {
         CourseAttributeListBuilder<ApiOfferingSectionDTO, ClassComponent> componentList
                 = new CourseAttributeListBuilder<>() {
             @Override
-            public Iterator<? extends ClassComponent> getDTOIterator(Department<SFUCourse> newDepartment) {
+            public Iterator<? extends ClassComponent> getDTOIterator(Department newDepartment) {
                 Iterator<? extends ClassComponent> courseOfferingIterator =
                         newDepartment.getAllCourseOfferingSections(courseID, courseOfferingID);
                 return courseOfferingIterator;
@@ -133,7 +132,7 @@ public class SFUDepartmentController {
         CourseAttributeListBuilder<ApiCourseOfferingDTO, Section> courseOfferingList =
                 new CourseAttributeListBuilder<>() {
             @Override
-            public Iterator<? extends Section> getDTOIterator(Department<SFUCourse> newDepartment) {
+            public Iterator<? extends Section> getDTOIterator(Department newDepartment) {
                 Iterator<? extends Section> allCourseOfferings = newDepartment.getAllCourseOfferings(courseID);
                 return allCourseOfferings;
             }

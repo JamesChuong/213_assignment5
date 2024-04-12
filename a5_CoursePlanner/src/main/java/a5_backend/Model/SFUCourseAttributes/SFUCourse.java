@@ -3,7 +3,7 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Section;
-import a5_backend.Watchers.CourseObserver;
+import a5_backend.Watchers.Observer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +20,7 @@ public class SFUCourse implements Course {
 
     private final List<CourseSection> courseSections = new ArrayList<>(){};
 
-    private final List<CourseObserver> observers = new ArrayList<>(){};
+    private final List<Observer> observers = new ArrayList<>(){};
 
     public SFUCourse(String departmentName, String catalogNumber, long courseID){
         this.DEPARTMENT_NAME = departmentName;
@@ -96,7 +96,7 @@ public class SFUCourse implements Course {
     }
 
     @Override
-    public void addObserver(CourseObserver newObserver) {
+    public void addObserver(Observer newObserver) {
         observers.add(newObserver);
     }
 
