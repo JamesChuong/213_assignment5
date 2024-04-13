@@ -148,7 +148,7 @@ public class SFUDepartmentController {
     @PostMapping("api/addoffering")
     @ResponseStatus(HttpStatus.CREATED)
     public void addOffering(@RequestBody ApiOfferingDataDTO newDTO) {
-        DEPARTMENT_MANAGER.addOffering();
+        DEPARTMENT_MANAGER.addOffering(newDTO);
 
 
 

@@ -75,7 +75,8 @@ public class SFUDepartmentList implements DepartmentList {
         addComponent(newClassComponent);
     }
 
-    private void parseApiOfferingDataDTO(ApiOfferingDataDTO dto){
+    @Override
+    public void parseApiOfferingDataDTO(ApiOfferingDataDTO dto){
         //System.out.println(CSVLine); // raw printing out of the whole extracted string
         //Scanner lineScanner = new Scanner(CSVLine);
         //lineScanner.useDelimiter(",");

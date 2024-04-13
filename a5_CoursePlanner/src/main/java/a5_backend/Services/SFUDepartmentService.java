@@ -1,6 +1,7 @@
 package a5_backend.Services;
 
 import a5_backend.DTOs.ApiDepartmentDTO;
+import a5_backend.DTOs.ApiOfferingDataDTO;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
@@ -65,5 +66,9 @@ public class SFUDepartmentService {
 
     public List<String> getWatcherEvents(long courseID){
         return WATCHERS.retreiveEventsOfWatcher(courseID);
+    }
+
+    public void addOffering(ApiOfferingDataDTO dto) {
+        DEPARTMENT_LIST.parseApiOfferingDataDTO(dto);
     }
 }
