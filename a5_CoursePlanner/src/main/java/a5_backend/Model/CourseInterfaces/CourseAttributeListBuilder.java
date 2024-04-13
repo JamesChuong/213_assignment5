@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @param <k> Represents the attribute
  */
 public interface CourseAttributeListBuilder<T, k> {
-    Iterator<? extends k> getDTOIterator(Department<SFUCourse> newDepartment);
+    Iterator<? extends k> getDTOIterator(Department newDepartment);
 
     T createDTO(k newCourseAttribute);
 }

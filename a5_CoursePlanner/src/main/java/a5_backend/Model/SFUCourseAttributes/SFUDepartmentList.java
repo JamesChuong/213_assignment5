@@ -94,20 +94,15 @@ public class SFUDepartmentList implements DepartmentList {
         int enrollmentTotal = dto.enrollmentTotal;
         List<String> instructors = new ArrayList<>();
         String instructorLine = dto.instructor;
-        if(instructorLine.equals("<null>")){
-            instructors.add(" ");
-        } else if (instructorLine.contains("\"")){
-            instructors.add(instructorLine.trim().replace("\"", ""));
-            String nextInstructor = lineScanner.next();
-            while(!nextInstructor.contains("\"")){
-                instructors.add(nextInstructor.trim());
-                nextInstructor = lineScanner.next();
-            }
-            instructors.add(nextInstructor.replace("\"", "").trim());
+        if (instructorLine.equals("<null>")) {
+            instructors.add("");
         } else {
-            instructors.add(instructorLine.trim());
+            String[] parts = instructorLine.split(",");
+            for (String part : parts) {
+                instructors.add(part.trim().replaceAll("\"", ""));
+            }
         }
-        String componentCode = lineScanner.next().trim();
+        String componentCode = dto.component;
         if(semesterInt == 1134 && subject.equals("CMPT") && catalogNumber.equals("130") && instructors.getFirst().equals("Harinder Khangura") && componentCode.equals("LEC")){
             System.out.println(instructors);
             System.out.println(enrollmentTotal);
