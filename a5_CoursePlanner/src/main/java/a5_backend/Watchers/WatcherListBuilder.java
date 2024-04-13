@@ -1,6 +1,7 @@
 package a5_backend.Watchers;
 
 import java.util.Iterator;
+import java.util.List;
 
 public interface WatcherListBuilder {
 
@@ -10,5 +11,6 @@ public interface WatcherListBuilder {
 
     Watcher retreiveWatcher(long watcherID);
 
+    List<String> retreiveEventsOfWatcher(long watcherID);
 
 }

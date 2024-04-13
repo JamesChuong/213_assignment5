@@ -28,5 +28,15 @@ public class WatcherList implements WatcherListBuilder {
         throw new RuntimeException("Error: Watcher not found");
     }
 
+    @Override
+    public List<String> retreiveEventsOfWatcher(long watcherID){
+        for(Watcher currentWatcher: watcherList){
+            if(currentWatcher.getID() == watcherID){
+                return currentWatcher.getListOfChanges();
+            }
+        }
+        throw new RuntimeException("Error: Watcher not found");
+    }
+
 
 }

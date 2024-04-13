@@ -48,7 +48,7 @@ public class SFUDepartmentController {
 
     @GetMapping("/api/departments/{departmentID}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Department> getDepartmentById(@PathVariable double departmentID) {
+    public ResponseEntity<Department> getDepartmentById(@PathVariable("departmentID") double departmentID) {
         Department department = DEPARTMENT_MANAGER.getDepartment(departmentID);
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,7 +59,8 @@ public class SFUDepartmentController {
     //Generic method for obtaining a list of course attributes (courses, sections/offerings, and components)
     //Has 2 type parameters, T and k, k represents the course attribute we want a list of, and T is the
     //corresponding DTO for attribute k.
-    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter, Comparator<T> comparator){
+    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter
+            , Comparator<T> comparator){
         try {
             Department department = DEPARTMENT_MANAGER.getDepartment(departmentID);
             if(department == null) {
@@ -83,7 +84,7 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses")
     @ResponseStatus(HttpStatus.OK)
-    public List<ApiCourseDTO> getDepartmentCourses(@PathVariable long departmentID){
+    public List<ApiCourseDTO> getDepartmentCourses(@PathVariable("departmentID") long departmentID){
         CourseAttributeListBuilder<ApiCourseDTO, Course> CourseDTOFilter = new CourseAttributeListBuilder<>() {
             @Override
             public Iterator<? extends Course> getDTOIterator(Department newDepartment) {
@@ -101,8 +102,8 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings/{courseOfferingID}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ApiOfferingSectionDTO> getCourseOfferingComponents(@PathVariable long departmentID
-            , @PathVariable long courseID, @PathVariable long courseOfferingID){
+    public List<ApiOfferingSectionDTO> getCourseOfferingComponents(@PathVariable("departmentID") long departmentID
+            , @PathVariable("courseID") long courseID, @PathVariable("courseOfferingID") long courseOfferingID){
         CourseAttributeListBuilder<ApiOfferingSectionDTO, ClassComponent> componentList
                 = new CourseAttributeListBuilder<>() {
             @Override
@@ -124,8 +125,8 @@ public class SFUDepartmentController {
 
     @GetMapping("api/departments/{departmentID}/courses/{courseID}/offerings")
     @ResponseStatus(HttpStatus.OK)
-    public List<ApiCourseOfferingDTO> getAllCourseOfferings(@PathVariable long departmentID
-            , @PathVariable long courseID){
+    public List<ApiCourseOfferingDTO> getAllCourseOfferings(@PathVariable("departmentID") long departmentID
+            , @PathVariable("courseID") long courseID){
         CourseAttributeListBuilder<ApiCourseOfferingDTO, Section> courseOfferingList =
                 new CourseAttributeListBuilder<>() {
             @Override

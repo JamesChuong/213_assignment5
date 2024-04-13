@@ -63,6 +63,7 @@ public class SFUDepartmentService {
         DEPARTMENT_LIST.printCSVFile();
     }
 
-    public void addOffering() {
+    public List<String> getWatcherEvents(long courseID){
+        return WATCHERS.retreiveEventsOfWatcher(courseID);
     }
 }
