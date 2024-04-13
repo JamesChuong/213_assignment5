@@ -5,7 +5,7 @@ import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
 import a5_backend.Watchers.CourseWatcher;
-import a5_backend.Watchers.Watcher;
+import a5_backend.Watchers.WatcherInterfaces.Watcher;
 import a5_backend.Watchers.WatcherList;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;

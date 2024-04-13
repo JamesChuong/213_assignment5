@@ -3,7 +3,7 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Section;
-import a5_backend.Watchers.Observer;
+import a5_backend.Watchers.WatcherInterfaces.Observer;
 
 import java.util.ArrayList;
 import java.util.Iterator;

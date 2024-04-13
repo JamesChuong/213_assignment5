@@ -1,5 +1,7 @@
-package a5_backend.Watchers;
+package a5_backend.Watchers.WatcherInterfaces;
 
+
+import a5_backend.Watchers.WatcherInterfaces.Observer;
 
 import java.util.List;
 
