@@ -1,6 +1,5 @@
 package a5_backend.Watchers;
 
-
 import java.util.List;
 
 public interface Watcher {

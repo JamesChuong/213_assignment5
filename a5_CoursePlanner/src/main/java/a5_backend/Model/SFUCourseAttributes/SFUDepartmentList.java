@@ -44,7 +44,6 @@ public class SFUDepartmentList implements DepartmentList {
     }
 
     private void parseLine(String CSVLine){
-        //System.out.println(CSVLine); // raw printing out of the whole extracted string
         Scanner lineScanner = new Scanner(CSVLine);
         lineScanner.useDelimiter(",");
         String semester = lineScanner.next().trim();
@@ -70,11 +69,6 @@ public class SFUDepartmentList implements DepartmentList {
             instructors.add(instructorLine.trim());
         }
         String componentCode = lineScanner.next().trim();
-        if(semesterInt == 1134 && subject.equals("CMPT") && catalogNumber.equals("130") && instructors.getFirst().equals("Harinder Khangura") && componentCode.equals("LEC")){
-            System.out.println(instructors);
-            System.out.println(enrollmentTotal);
-            System.out.println(enrollmentCapacity);
-        }
         ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
                 instructors, subject, catalogNumber, location, semesterInt, componentCode);
         addComponent(newClassComponent);
