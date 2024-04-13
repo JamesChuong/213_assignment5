@@ -1,5 +1,6 @@
 package a5_backend.Model.SFUCourseAttributes;
 
+import a5_backend.DTOs.ApiOfferingDataDTO;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
@@ -56,6 +57,43 @@ public class SFUDepartmentList implements DepartmentList {
         int enrollmentTotal = lineScanner.nextInt();
         List<String> instructors = new ArrayList<>();
         String instructorLine = lineScanner.next();
+        if(instructorLine.equals("<null>")){
+            instructors.add(" ");
+        } else if (instructorLine.contains("\"")){
+            instructors.add(instructorLine.trim().replace("\"", ""));
+            String nextInstructor = lineScanner.next();
+            while(!nextInstructor.contains("\"")){
+                instructors.add(nextInstructor.trim());
+                nextInstructor = lineScanner.next();
+            }
+            instructors.add(nextInstructor.replace("\"", "").trim());
+        } else {
+            instructors.add(instructorLine.trim());
+        }
+        String componentCode = lineScanner.next().trim();
+        if(semesterInt == 1134 && subject.equals("CMPT") && catalogNumber.equals("130") && instructors.getFirst().equals("Harinder Khangura") && componentCode.equals("LEC")){
+            System.out.println(instructors);
+            System.out.println(enrollmentTotal);
+            System.out.println(enrollmentCapacity);
+        }
+        ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
+                instructors, subject, catalogNumber, location, semesterInt, componentCode);
+        addComponent(newClassComponent);
+    }
+
+    private void parseApiOfferingDataDTO(ApiOfferingDataDTO dto){
+        //System.out.println(CSVLine); // raw printing out of the whole extracted string
+        //Scanner lineScanner = new Scanner(CSVLine);
+        //lineScanner.useDelimiter(",");
+        String semester = dto.semester;
+        int semesterInt = Integer.parseInt(semester);
+        String subject = dto.subjectName;
+        String catalogNumber = dto.catalogNumber;
+        String location = dto.location;
+        int enrollmentCapacity = dto.enrollmentCap;
+        int enrollmentTotal = dto.enrollmentTotal;
+        List<String> instructors = new ArrayList<>();
+        String instructorLine = dto.instructor;
         if(instructorLine.equals("<null>")){
             instructors.add(" ");
         } else if (instructorLine.contains("\"")){
