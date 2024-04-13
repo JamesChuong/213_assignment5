@@ -148,7 +148,11 @@ public class SFUDepartmentController {
     @PostMapping("api/addoffering")
     @ResponseStatus(HttpStatus.CREATED)
     public void addOffering(@RequestBody ApiOfferingDataDTO newDTO) {
-        DEPARTMENT_MANAGER.addOffering(newDTO);
+        try {
+            DEPARTMENT_MANAGER.addOffering(newDTO);
+        } catch (Exception e) {
+            throw new RequestNotFound("Course ID not found");
+        }
 
 
 
