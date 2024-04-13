@@ -1,5 +1,6 @@
 package a5_backend.Model.SFUCourseAttributes;
 
+import a5_backend.DTOs.ApiOfferingDataDTO;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
@@ -44,7 +45,6 @@ public class SFUDepartmentList implements DepartmentList {
     }
 
     private void parseLine(String CSVLine){
-        //System.out.println(CSVLine); // raw printing out of the whole extracted string
         Scanner lineScanner = new Scanner(CSVLine);
         lineScanner.useDelimiter(",");
         String semester = lineScanner.next().trim();
@@ -70,6 +70,33 @@ public class SFUDepartmentList implements DepartmentList {
             instructors.add(instructorLine.trim());
         }
         String componentCode = lineScanner.next().trim();
+        ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
+                instructors, subject, catalogNumber, location, semesterInt, componentCode);
+        addComponent(newClassComponent);
+    }
+
+    private void parseApiOfferingDataDTO(ApiOfferingDataDTO dto){
+        //System.out.println(CSVLine); // raw printing out of the whole extracted string
+        //Scanner lineScanner = new Scanner(CSVLine);
+        //lineScanner.useDelimiter(",");
+        String semester = dto.semester;
+        int semesterInt = Integer.parseInt(semester);
+        String subject = dto.subjectName;
+        String catalogNumber = dto.catalogNumber;
+        String location = dto.location;
+        int enrollmentCapacity = dto.enrollmentCap;
+        int enrollmentTotal = dto.enrollmentTotal;
+        List<String> instructors = new ArrayList<>();
+        String instructorLine = dto.instructor;
+        if (instructorLine.equals("<null>")) {
+            instructors.add("");
+        } else {
+            String[] parts = instructorLine.split(",");
+            for (String part : parts) {
+                instructors.add(part.trim().replaceAll("\"", ""));
+            }
+        }
+        String componentCode = dto.component;
         if(semesterInt == 1134 && subject.equals("CMPT") && catalogNumber.equals("130") && instructors.getFirst().equals("Harinder Khangura") && componentCode.equals("LEC")){
             System.out.println(instructors);
             System.out.println(enrollmentTotal);

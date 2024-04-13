@@ -62,4 +62,8 @@ public class SFUDepartmentService {
     public void dumpModel(){
         DEPARTMENT_LIST.printCSVFile();
     }
+
+    public List<String> getWatcherEvents(long courseID){
+        return WATCHERS.retreiveEventsOfWatcher(courseID);
+    }
 }

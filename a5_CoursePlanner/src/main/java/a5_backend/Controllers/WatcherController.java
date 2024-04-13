@@ -48,6 +48,7 @@ public class WatcherController {
         List<ApiWatcherDTO> DTOList = new ArrayList<>();
         while(allWatchers.hasNext()){
             Watcher currentWatcher = allWatchers.next();
+            System.out.println(currentWatcher.getListOfChanges());
             Department observedDepartment = DEPARTMENT_MANAGER.getDepartment(currentWatcher.getDepartmentID());
             Course observedCourse = observedDepartment.findCourse(currentWatcher.getCourseID());
             DTOList.add( ApiWatcherDTO.createNewWatcherDTO( currentWatcher.getID()
@@ -66,4 +67,11 @@ public class WatcherController {
             throw new BadRequest(notFoundException.getMessage());
         }
     }
+
+    @GetMapping("api/watcher/{watcherID}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getWatcherEvents(@PathVariable("watcherID") long watcherID){
+        return DEPARTMENT_MANAGER.getWatcherEvents(watcherID);
+    }
+
 }

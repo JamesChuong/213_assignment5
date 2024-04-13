@@ -12,10 +12,10 @@ public interface DepartmentList {
     //Dumps all contents of the CSV file to the terminal
     void printCSVFile();
 
-    Department<SFUCourse> getDepartment(double departmentID);
+    Department getDepartment(double departmentID);
 
     //Returns an iterator of objects which implement the Department interface
-    Iterator<? extends Department<SFUCourse>> getAllDepartments();
+    Iterator<? extends Department> getAllDepartments();
 
     void addNewObserver(long departmentID, long courseID, Observer newObserver);
 
