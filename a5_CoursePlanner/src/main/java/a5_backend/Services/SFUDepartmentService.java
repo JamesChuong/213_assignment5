@@ -62,4 +62,7 @@ public class SFUDepartmentService {
     public void dumpModel(){
         DEPARTMENT_LIST.printCSVFile();
     }
+
+    public void addOffering() {
+    }
 }

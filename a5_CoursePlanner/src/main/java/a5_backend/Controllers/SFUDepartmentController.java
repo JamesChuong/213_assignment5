@@ -1,9 +1,6 @@
 package a5_backend.Controllers;
 
-import a5_backend.DTOs.ApiCourseDTO;
-import a5_backend.DTOs.ApiCourseOfferingDTO;
-import a5_backend.DTOs.ApiDepartmentDTO;
-import a5_backend.DTOs.ApiOfferingSectionDTO;
+import a5_backend.DTOs.*;
 import a5_backend.Model.CourseInterfaces.*;
 import a5_backend.Services.SFUDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,7 +146,9 @@ public class SFUDepartmentController {
 
     @PostMapping("api/addoffering")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addOffering() {
+    public void addOffering(@RequestBody ApiOfferingDataDTO newDTO) {
+        DEPARTMENT_MANAGER.addOffering();
+
 
 
     }
