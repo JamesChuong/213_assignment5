@@ -23,8 +23,8 @@ public class CourseWatcher implements Watcher {
     private final int SUMMER_CODE = 4;
 
     private Observer courseObserver = new Observer() {
-        private String latestEvent = "No Events yet";
-        private int semesterOfChangedEvent = -99999;
+        private String latestEvent = "";
+        private int semesterOfChangedEvent = 0;
         @Override
         public void updateEvents(ClassComponent newComponent) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
@@ -53,13 +53,8 @@ public class CourseWatcher implements Watcher {
 
     @Override
     public List<String> getListOfChanges() {
-        String latestEvent = courseObserver.getLatestEvent();
-        int semester = courseObserver.getSemester();
-        String completedEvent = latestEvent;
-        if(semester != -99999){
-             completedEvent += String.format("%s %d", getTerm(semester), getYear(semester));
-        }
-        allChanges.add(completedEvent);
+
+        //allChanges.add(completedEvent);
         allChanges.stream().distinct();
         return allChanges;
     }
