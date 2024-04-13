@@ -1,5 +1,6 @@
 package a5_backend.Model.CourseInterfaces;
 
+import a5_backend.DTOs.ApiOfferingDataDTO;
 import a5_backend.Model.SFUCourseAttributes.SFUCourse;
 import a5_backend.Watchers.WatcherInterfaces.Observer;
 
@@ -20,4 +21,5 @@ public interface DepartmentList {
     void addNewObserver(long departmentID, long courseID, Observer newObserver);
 
 
+    void parseApiOfferingDataDTO(ApiOfferingDataDTO dto);
 }
