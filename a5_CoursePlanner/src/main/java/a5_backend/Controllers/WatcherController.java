@@ -7,7 +7,7 @@ import a5_backend.DTOs.ApiWatcherDTO;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Services.SFUDepartmentService;
-import a5_backend.Watchers.Watcher;
+import a5_backend.Watchers.WatcherInterfaces.Watcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

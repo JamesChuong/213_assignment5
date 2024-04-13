@@ -1,17 +1,13 @@
 package a5_backend.Model.CourseInterfaces;
 
-import a5_backend.DTOs.ApiOfferingDataDTO;
-import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.SFUCourseAttributes.SFUCourse;
-import a5_backend.Watchers.Observer;
+import a5_backend.Watchers.WatcherInterfaces.Observer;
 
 import java.util.Iterator;
 
 public interface DepartmentList {
 
     void loadCSVFile(String CSVFile);
-
-    void parseApiOfferingDataDTO(ApiOfferingDataDTO dto);
 
     //Dumps all contents of the CSV file to the terminal
     void printCSVFile();

@@ -1,5 +1,5 @@
 package a5_backend.Model.CourseInterfaces;
-import a5_backend.Watchers.Observer;
+import a5_backend.Watchers.WatcherInterfaces.Observer;
 
 import java.util.Iterator;
 /**

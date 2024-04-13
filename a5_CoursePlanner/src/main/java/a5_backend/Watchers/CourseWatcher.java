@@ -1,6 +1,8 @@
 package a5_backend.Watchers;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
+import a5_backend.Watchers.WatcherInterfaces.Observer;
+import a5_backend.Watchers.WatcherInterfaces.Watcher;
 
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +11,7 @@ import java.util.NoSuchElementException;
 
 import static java.time.LocalTime.now;
 
-public class CourseWatcher implements Watcher{
+public class CourseWatcher implements Watcher {
 
     //The total number of watchers which have been created
     private static long watcherCount = 0;

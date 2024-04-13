@@ -1,4 +1,4 @@
-package a5_backend.Watchers;
+package a5_backend.Watchers.WatcherInterfaces;
 
 import java.util.List;
 
