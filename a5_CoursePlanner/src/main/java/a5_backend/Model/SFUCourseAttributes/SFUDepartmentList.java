@@ -77,9 +77,6 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public void parseApiOfferingDataDTO(ApiOfferingDataDTO dto){
-        //System.out.println(CSVLine); // raw printing out of the whole extracted string
-        //Scanner lineScanner = new Scanner(CSVLine);
-        //lineScanner.useDelimiter(",");
         String semester = dto.semester;
         int semesterInt = Integer.parseInt(semester);
         String subject = dto.subjectName;
@@ -140,14 +137,6 @@ public class SFUDepartmentList implements DepartmentList {
         return hashCode;
     }
 
-    /*
-    private void createNewDepartment(String departmentName, ClassComponent newComponent){
-        Department newSFUDepartment = new SFUDepartment(departmentName);
-        newSFUDepartment.addNewComponent(newComponent);
-        allDepartmentsAtSFU.put(hashingFunction(departmentName), newSFUDepartment);
-    }
-     */
-
     @Override
     public void printCSVFile() {
         for (Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()) {
@@ -158,31 +147,16 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public Department getDepartment(double departmentID){
-        /*
-        Department retreivedDepartment = allDepartmentsAtSFU.get(departmentID);
-        System.out.println(allDepartmentsAtSFU.get(departmentID));
-        System.out.println(departmentID);
-        /* SFUDepartmentList shouldn't throw exceptions, SFUDepartmentService should
-        if(retreivedDepartment == null){
-            throw new RuntimeException("Error: Department not found");
-
-        return retreivedDepartment;
-        */
-
         Double key = departmentID;
         Department retrievedDepartment = null;
         for(Double hashValue : hashValuesList) {
-            //System.out.println("The current hashvalue is: " + allDepartmentsAtSFU.get(hashValue).hashCode());
             if (allDepartmentsAtSFU.get(hashValue).hashCode() == key.intValue()) {
-                //System.out.println("true: " + allDepartmentsAtSFU.get(hashValue).hashCode() + " " + key);
                 retrievedDepartment = allDepartmentsAtSFU.get(hashValue);
                 return retrievedDepartment;
             }
         }
         throw new RuntimeException("Error: Department not found");
-        //System.out.println("Retrieved Department: " + retrievedDepartment);
-        //System.out.println("Department ID: " + departmentID);
-        //System.out.println("key: " + key.intValue());
+
 
     }
 

@@ -41,6 +41,7 @@ public class SFUCourse implements Course {
                 .anyMatch( section -> section.semester == newComponent.getSemester()
                         && section.location.equals(newComponent.getLocation())
                         && section.instructors.equals(newComponent.getInstructors()) );
+
         observers.forEach(observers -> observers.updateEvents(newComponent));
         if(componentIsPartOfSection){
             courseSections.stream()

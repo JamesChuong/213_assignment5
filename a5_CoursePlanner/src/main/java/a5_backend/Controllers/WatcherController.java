@@ -38,7 +38,6 @@ public class WatcherController {
     @Autowired
     public WatcherController(SFUDepartmentService SFUDepartmentService) {
         this.DEPARTMENT_MANAGER = SFUDepartmentService;
-        //this.SFUDepartmentController = SFUDepartmentController;
     }
 
     @GetMapping("api/watchers")
