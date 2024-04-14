@@ -14,7 +14,7 @@ import static java.time.LocalTime.now;
 public class CourseWatcher implements Watcher {
 
     //The total number of watchers which have been created
-    private static long watcherCount = 0;
+    private static long watcherCount = 1;
     private long watcherID;
     private long departmentID;
     private long courseID;
