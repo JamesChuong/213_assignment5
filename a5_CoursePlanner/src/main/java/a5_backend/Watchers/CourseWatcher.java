@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static java.time.LocalTime.now;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CourseWatcher implements Watcher {
 
@@ -28,9 +29,13 @@ public class CourseWatcher implements Watcher {
         private int semesterOfChangedEvent = -99999;
         @Override
         public void updateEvents(ClassComponent newComponent) {
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
+            // Get the timezone and set the date format to "day of the week / month / day / time / timezone / year"
+            // "now" gets the current timezone and .format applies the specified time format
+            ZonedDateTime now = ZonedDateTime.now();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
+
             latestEvent = String.format("%s: Added section %s with enrollment (%d/%d) to offering "
-                    , now(), newComponent.getComponentCode()
+                    , now.format(dateFormatter), newComponent.getComponentCode()
                     , newComponent.getEnrollmentTotal(), newComponent.getCapacity());
             semesterOfChangedEvent = newComponent.getSemester();
         }
