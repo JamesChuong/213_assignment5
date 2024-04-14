@@ -27,9 +27,9 @@ public class CourseWatcher implements Watcher {
         private int semesterOfChangedEvent = 0;
         @Override
         public void updateEvents(ClassComponent newComponent) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
             latestEvent = String.format("%s: Added section %s with enrollment (%d/%d) to offering "
-                    , now().format(formatter), newComponent.getComponentCode()
+                    , now(), newComponent.getComponentCode()
                     , newComponent.getEnrollmentTotal(), newComponent.getCapacity());
             semesterOfChangedEvent = newComponent.getSemester();
         }
