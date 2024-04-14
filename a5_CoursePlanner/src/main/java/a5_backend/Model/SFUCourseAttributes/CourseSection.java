@@ -139,7 +139,6 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         return year;
     }
 
-
     @Override
     public Iterator<? extends ClassComponent> getAllComponents() {
         Comparator<ClassComponent> comparator = Comparator.comparing(ClassComponent::getComponentCode)

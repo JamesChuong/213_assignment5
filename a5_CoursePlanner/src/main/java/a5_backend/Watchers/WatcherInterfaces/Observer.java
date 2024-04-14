@@ -8,7 +8,7 @@ public interface Observer {
 
     String getLatestEvent();
 
-    int getSemester();
+    int getSemesterOfLatestEvent();
 
 
 

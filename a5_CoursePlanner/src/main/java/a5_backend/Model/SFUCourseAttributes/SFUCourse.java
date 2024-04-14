@@ -12,14 +12,10 @@ import java.util.List;
 public class SFUCourse implements Course {
 
     private final String DEPARTMENT_NAME;
-
     private final String CATALOG_NUMBER;
-
     private final long COURSE_ID;
     private int indexOfLastSection = -1;
-
     private final List<CourseSection> courseSections = new ArrayList<>(){};
-
     private final List<Observer> observers = new ArrayList<>(){};
 
     public SFUCourse(String departmentName, String catalogNumber, long courseID){

@@ -5,7 +5,6 @@ import a5_backend.Watchers.WatcherInterfaces.Observer;
 import a5_backend.Watchers.WatcherInterfaces.Watcher;
 
 import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class CourseWatcher implements Watcher {
             return latestEvent;
         }
         @Override
-        public int getSemester(){
+        public int getSemesterOfLatestEvent(){
             return semesterOfChangedEvent;
         }
     };
@@ -57,6 +56,8 @@ public class CourseWatcher implements Watcher {
     public List<String> getListOfChanges() {
         if(!courseObserver.getLatestEvent().isEmpty()){
             String completedEvent = courseObserver.getLatestEvent();
+            int semesterOfLatestEvent = courseObserver.getSemesterOfLatestEvent();
+            completedEvent += getTerm(semesterOfLatestEvent) + " " + getYear(semesterOfLatestEvent);
             allChanges.add(completedEvent);
             allChanges = allChanges.stream().distinct().collect(Collectors.toList());
         }
