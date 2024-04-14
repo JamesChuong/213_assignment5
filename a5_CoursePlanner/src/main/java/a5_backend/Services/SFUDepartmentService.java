@@ -21,15 +21,7 @@ public class SFUDepartmentService {
             .createDepartmentListWithCSVFile("data/course_data_2018.csv");
     private final WatcherList WATCHERS = new WatcherList();
     // Initializes SFUDepartmentService before it is used by the controllers
-    @PostConstruct
-    public void init() {
-        try {
-            //sfuDepartmentList.loadCSVFile("data/course_data_2018.csv");
-            //sfuDepartmentList.printCSVFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     // Gets and returns single SFUDepartment from sfuDepartmentList
     public Department getDepartment(double departmentID) {

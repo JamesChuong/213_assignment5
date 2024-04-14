@@ -43,7 +43,14 @@ public class WatcherList implements WatcherListBuilder {
 
     @Override
     public void deleteWatcher(long watcherID) {
-
+        Iterator<Watcher> watcherIterator = watcherList.iterator();
+        while (watcherIterator.hasNext()){
+            Watcher currentWatcher = watcherIterator.next();
+            if (currentWatcher.getID() == watcherID) {
+                watcherIterator.remove();
+                break;
+            }
+        }
     }
 
 

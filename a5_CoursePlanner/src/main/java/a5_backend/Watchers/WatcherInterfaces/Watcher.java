@@ -14,6 +14,4 @@ public interface Watcher {
 
     Observer getObserver();
 
-    String getLatestEvent();
-
 }

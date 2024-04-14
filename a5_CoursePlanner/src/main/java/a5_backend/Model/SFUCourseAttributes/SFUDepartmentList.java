@@ -95,11 +95,6 @@ public class SFUDepartmentList implements DepartmentList {
             }
         }
         String componentCode = dto.component;
-        if(semesterInt == 1134 && subject.equals("CMPT") && catalogNumber.equals("130") && instructors.getFirst().equals("Harinder Khangura") && componentCode.equals("LEC")){
-            System.out.println(instructors);
-            System.out.println(enrollmentTotal);
-            System.out.println(enrollmentCapacity);
-        }
         ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
                 instructors, subject, catalogNumber, location, semesterInt, componentCode);
         addComponent(newClassComponent);

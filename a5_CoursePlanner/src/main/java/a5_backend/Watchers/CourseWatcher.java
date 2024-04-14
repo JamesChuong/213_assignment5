@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static java.time.LocalTime.now;
+import java.time.*;
 
 public class CourseWatcher implements Watcher {
 
@@ -28,9 +28,8 @@ public class CourseWatcher implements Watcher {
         private int semesterOfChangedEvent = -99999;
         @Override
         public void updateEvents(ClassComponent newComponent) {
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
             latestEvent = String.format("%s: Added section %s with enrollment (%d/%d) to offering "
-                    , now(), newComponent.getComponentCode()
+                    , LocalDateTime.now(), newComponent.getComponentCode()
                     , newComponent.getEnrollmentTotal(), newComponent.getCapacity());
             semesterOfChangedEvent = newComponent.getSemester();
         }
@@ -106,15 +105,5 @@ public class CourseWatcher implements Watcher {
     public Observer getObserver() {
         return courseObserver;
     }
-
-    @Override
-    public String getLatestEvent() {
-        try{
-            return allChanges.getLast();
-        } catch (NoSuchElementException err){
-            throw new RuntimeException("No changes have been made");
-        }
-    }
-
 
 }
