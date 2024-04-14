@@ -15,4 +15,6 @@ public interface WatcherListBuilder {
 
     List<String> retreiveEventsOfWatcher(long watcherID);
 
+    void deleteWatcher(long watcherID);
+
 }

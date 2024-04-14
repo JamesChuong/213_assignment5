@@ -73,4 +73,9 @@ public class WatcherController {
         return DEPARTMENT_MANAGER.getWatcherEvents(watcherID);
     }
 
+    @DeleteMapping("api/watcher/{watcherID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteWatcher(@PathVariable("watcherID") long watcherID){
+        DEPARTMENT_MANAGER.deleteWatcher(watcherID);
+    }
 }

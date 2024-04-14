@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import static java.time.LocalTime.now;
 
@@ -18,13 +19,14 @@ public class CourseWatcher implements Watcher {
     private long watcherID;
     private long departmentID;
     private long courseID;
+    //Stores all events which happen
     private List<String> allChanges = new ArrayList<>();
     private final int SPRING_CODE = 1;
     private final int SUMMER_CODE = 4;
 
     private Observer courseObserver = new Observer() {
         private String latestEvent = "";
-        private int semesterOfChangedEvent = 0;
+        private int semesterOfChangedEvent = -99999;
         @Override
         public void updateEvents(ClassComponent newComponent) {
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
@@ -53,9 +55,11 @@ public class CourseWatcher implements Watcher {
 
     @Override
     public List<String> getListOfChanges() {
-
-        //allChanges.add(completedEvent);
-        allChanges.stream().distinct();
+        if(!courseObserver.getLatestEvent().isEmpty()){
+            String completedEvent = courseObserver.getLatestEvent();
+            allChanges.add(completedEvent);
+            allChanges = allChanges.stream().distinct().collect(Collectors.toList());
+        }
         return allChanges;
     }
 

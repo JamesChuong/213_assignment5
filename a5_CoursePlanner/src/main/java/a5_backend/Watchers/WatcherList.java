@@ -41,5 +41,10 @@ public class WatcherList implements WatcherListBuilder {
         throw new RuntimeException("Error: Watcher not found");
     }
 
+    @Override
+    public void deleteWatcher(long watcherID) {
+
+    }
+
 
 }

@@ -71,4 +71,8 @@ public class SFUDepartmentService {
     public void addOffering(ApiOfferingDataDTO dto) {
         DEPARTMENT_LIST.parseApiOfferingDataDTO(dto);
     }
+
+    public void deleteWatcher(long watcherID){
+        WATCHERS.deleteWatcher(watcherID);
+    }
 }
