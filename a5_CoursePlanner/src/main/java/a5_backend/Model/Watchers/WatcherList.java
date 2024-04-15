@@ -1,7 +1,7 @@
-package a5_backend.Watchers;
+package a5_backend.Model.Watchers;
 
-import a5_backend.Watchers.WatcherInterfaces.Watcher;
-import a5_backend.Watchers.WatcherInterfaces.WatcherListBuilder;
+import a5_backend.Model.Watchers.WatcherInterfaces.Watcher;
+import a5_backend.Model.Watchers.WatcherInterfaces.WatcherListBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;

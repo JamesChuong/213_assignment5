@@ -1,6 +1,4 @@
-package a5_backend.Watchers.WatcherInterfaces;
-
-import a5_backend.Watchers.WatcherInterfaces.Watcher;
+package a5_backend.Model.Watchers.WatcherInterfaces;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,30 +1,29 @@
 package a5_backend.Services;
-
-import a5_backend.Controllers.SFUDepartmentController;
 import a5_backend.DTOs.*;
 import a5_backend.Model.CourseInterfaces.*;
 import a5_backend.Model.SFUCourseAttributes.SFUDepartmentList;
-import a5_backend.Watchers.CourseWatcher;
-import a5_backend.Watchers.WatcherInterfaces.Watcher;
-import a5_backend.Watchers.WatcherList;
-import jakarta.annotation.PostConstruct;
+import a5_backend.Model.Watchers.CourseWatcher;
+import a5_backend.Model.Watchers.WatcherInterfaces.Watcher;
+import a5_backend.Model.Watchers.WatcherList;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *  The SFUDepartmentService acts as the interface or "facade" for the controllers
+ *  in the API, it contains operations that the endpoints need, but redirects to
+ *  other operations defined in other classes. It has both a list of departments
+ *  and watchers.
+ */
 @Service
 public class SFUDepartmentService {
     private final DepartmentList DEPARTMENT_LIST = SFUDepartmentList
             .createDepartmentListWithCSVFile("data/course_data_2018.csv");
     private final WatcherList WATCHERS = new WatcherList();
-    // Initializes SFUDepartmentService before it is used by the controllers
 
-
-    // Gets and returns single SFUDepartment from sfuDepartmentList
+    // Gets and returns single SFU Department from DEPARTMENT_LIST
     public Department getDepartment(double departmentID) {
         return DEPARTMENT_LIST.getDepartment(departmentID);
     }
@@ -52,10 +51,12 @@ public class SFUDepartmentService {
         return WATCHERS.retreiveAllWatchers();
     }
 
+    //Print all contents of the model to the terminal
     public void dumpModel(){
-        DEPARTMENT_LIST.printCSVFile();
+        DEPARTMENT_LIST.dumpModel();
     }
 
+    //Get all events stored by a specific watcher
     public List<String> getWatcherEvents(long courseID){
         return WATCHERS.retreiveEventsOfWatcher(courseID);
     }

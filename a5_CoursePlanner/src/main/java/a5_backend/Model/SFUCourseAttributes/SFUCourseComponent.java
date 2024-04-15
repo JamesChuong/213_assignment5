@@ -5,6 +5,11 @@ import a5_backend.Model.CourseInterfaces.ClassComponent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The SFUCourseComponent class represents a component for a class, this could be a lecture, tutorial,
+ * lab, seminar, etc. It implements the ClassComponent interface and implements the methods and contains
+ * all information about a course offering, plus the type of component it is.
+ */
 public class SFUCourseComponent implements ClassComponent {
 
     private final int capacity;
@@ -48,16 +53,4 @@ public class SFUCourseComponent implements ClassComponent {
     @Override
     public String getComponentCode() {return componentCode;}
 
-    @Override
-    public String getInstructorsAsString() {
-        String listOfInstructors = "";
-        if(instructors.size() == 1){
-            return instructors.getFirst();
-        }
-        for(int i = 0; i < instructors.size()-1; i++){
-            listOfInstructors += instructors.get(i) + ", ";
-        }
-        listOfInstructors+=instructors.getLast();
-        return listOfInstructors;
-    }
 }

@@ -4,20 +4,27 @@ import a5_backend.DTOs.ApiOfferingDataDTO;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.DepartmentList;
-import a5_backend.Watchers.WatcherInterfaces.Observer;
+import a5_backend.Model.Watchers.WatcherInterfaces.Observer;
 
 import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * The SFUDepartmentList class is responsible for containing all departments (which also contain all of their courses)
+ * in the model. It supports loading a CSV file, printing out the contents that are currently stored, returning
+ * certain information stored (like departments, courses, or sections), and adding information (like components or watchers).
+ */
 public class SFUDepartmentList implements DepartmentList {
 
-    // The first 14 entries of the old allDepartmentsAtSFU since it fills it 24 times
+    // The first 14 entries of the old SFUDepartmentList since it fills it 24 times
     private final List<Double> hashValuesList = new ArrayList<>();
 
     //A hashmap is used to store each department, each department is mapped to its name (CMPT, ENSC, MATH, STAT, etc.)
-    private final HashMap<Double, Department> allDepartmentsAtSFU = new HashMap<>();
+    private final HashMap<Double, Department> SFUDepartmentList = new HashMap<>();
+
+    //Constant used when mapping departments to a unique key
     private final int HASH_CONSTANT = 33;
 
     public static SFUDepartmentList createDepartmentListWithCSVFile(String CSVFile){
@@ -44,6 +51,8 @@ public class SFUDepartmentList implements DepartmentList {
         }
     }
 
+    //How a line in a CSV file is parsed in order to extract important information
+    //which is then parsed into a component object and added to the correct department
     private void parseLine(String CSVLine){
         Scanner lineScanner = new Scanner(CSVLine);
         lineScanner.useDelimiter(",");
@@ -54,25 +63,35 @@ public class SFUDepartmentList implements DepartmentList {
         String location = lineScanner.next().trim();
         int enrollmentCapacity = lineScanner.nextInt();
         int enrollmentTotal = lineScanner.nextInt();
-        List<String> instructors = new ArrayList<>();
         String instructorLine = lineScanner.next();
-        if(instructorLine.equals("<null>")){
-            instructors.add(" ");
-        } else if (instructorLine.contains("\"")){
-            instructors.add(instructorLine.trim().replace("\"", ""));
-            String nextInstructor = lineScanner.next();
-            while(!nextInstructor.contains("\"")){
-                instructors.add(nextInstructor.trim());
-                nextInstructor = lineScanner.next();
-            }
-            instructors.add(nextInstructor.replace("\"", "").trim());
-        } else {
-            instructors.add(instructorLine.trim());
-        }
+        List<String> instructors = parseInstructors(instructorLine, lineScanner);
         String componentCode = lineScanner.next().trim();
         ClassComponent newClassComponent = new SFUCourseComponent(enrollmentCapacity, enrollmentTotal,
                 instructors, subject, catalogNumber, location, semesterInt, componentCode);
         addComponent(newClassComponent);
+    }
+
+    //Extracts information about instructors from a string
+    private List<String> parseInstructors(String instructorLine, Scanner lineScanner) {
+        List<String> instructors = new ArrayList<>();
+        //If there are no instructors, add an empty string to the component
+        if(instructorLine.equals("<null>")){
+            instructors.add("");
+        //If there are multiple instructors, parse each one
+        } else if (instructorLine.contains("\"")){
+            instructors.add(instructorLine.trim().replace("\"", ""));
+            String nextInstructor = lineScanner.next();
+            //Add all instructors in the middle, since we need to remove the quotes on both the first and last instructor listed
+            while(!nextInstructor.contains("\"")){
+                instructors.add(nextInstructor.trim());
+                nextInstructor = lineScanner.next();
+            }
+            instructors.add(nextInstructor.replace("\"", "").trim());   //Remove the quotes
+        //There is only 1 instructor
+        } else {
+            instructors.add(instructorLine.trim());
+        }
+        return instructors;
     }
 
     @Override
@@ -84,8 +103,11 @@ public class SFUDepartmentList implements DepartmentList {
         String location = dto.location;
         int enrollmentCapacity = dto.enrollmentCap;
         int enrollmentTotal = dto.enrollmentTotal;
-        List<String> instructors = new ArrayList<>();
         String instructorLine = dto.instructor;
+        Scanner lineScanner = new Scanner(instructorLine);
+        //lineScanner.useDelimiter(",");
+        //List<String> instructors = parseInstructors(instructorLine, lineScanner);
+        List<String> instructors = new ArrayList<>();
         if (instructorLine.equals("<null>")) {
             instructors.add("");
         } else {
@@ -107,17 +129,18 @@ public class SFUDepartmentList implements DepartmentList {
         String departmentName = newComponent.getDepartmentName();
         Double hashValue = hashingFunction(departmentName);
         Department department;
-        if (!allDepartmentsAtSFU.containsKey(hashValue)) {
+        boolean departmentFound = SFUDepartmentList.containsKey(hashValue);
+        if (departmentFound) {
+            department = SFUDepartmentList.get(hashValue);
+            department.addNewComponent(newComponent);
+            department.setHashValue(hashValue);
+        } else{
             department = new SFUDepartment(departmentName);
-            allDepartmentsAtSFU.put(hashValue, department);
+            SFUDepartmentList.put(hashValue, department);
             hashValuesList.add(hashValue);
             department.addNewComponent(newComponent);
             department.setHashValue(hashValue);
-            return;
         }
-        department = allDepartmentsAtSFU.get(hashValue);
-        department.addNewComponent(newComponent);
-        department.setHashValue(hashValue);
     }
 
     //Maps department names to a unique key using a polynomial hashing technique
@@ -133,8 +156,8 @@ public class SFUDepartmentList implements DepartmentList {
     }
 
     @Override
-    public void printCSVFile() {
-        for (Map.Entry<Double, Department> entry : allDepartmentsAtSFU.entrySet()) {
+    public void dumpModel() {
+        for (Map.Entry<Double, Department> entry : SFUDepartmentList.entrySet()) {
             Department department = entry.getValue();
             department.printAllCourseOfferings();
         }
@@ -145,20 +168,18 @@ public class SFUDepartmentList implements DepartmentList {
         Double key = departmentID;
         Department retrievedDepartment = null;
         for(Double hashValue : hashValuesList) {
-            if (allDepartmentsAtSFU.get(hashValue).hashCode() == key.intValue()) {
-                retrievedDepartment = allDepartmentsAtSFU.get(hashValue);
+            if (SFUDepartmentList.get(hashValue).hashCode() == key.intValue()) {
+                retrievedDepartment = SFUDepartmentList.get(hashValue);
                 return retrievedDepartment;
             }
         }
         throw new RuntimeException("Error: Department not found");
-
-
     }
 
     @Override
     public Iterator<? extends Department> getAllDepartments() {
-        List<Department> departments = new ArrayList<>(allDepartmentsAtSFU.values());
-        Comparator<Department> comparator = Comparator.comparing(Department::getName);
+        List<Department> departments = new ArrayList<>(SFUDepartmentList.values());
+        Comparator<Department> comparator = Comparator.comparing(Department::getDepartmentName);
         departments.sort(comparator);
         return departments.iterator();
     }

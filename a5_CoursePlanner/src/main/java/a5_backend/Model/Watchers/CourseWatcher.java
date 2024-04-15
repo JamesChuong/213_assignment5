@@ -1,12 +1,11 @@
-package a5_backend.Watchers;
+package a5_backend.Model.Watchers;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
-import a5_backend.Watchers.WatcherInterfaces.Observer;
-import a5_backend.Watchers.WatcherInterfaces.Watcher;
+import a5_backend.Model.Watchers.WatcherInterfaces.Observer;
+import a5_backend.Model.Watchers.WatcherInterfaces.Watcher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 

@@ -1,15 +1,13 @@
 package a5_backend.Model.CourseInterfaces;
-import a5_backend.Watchers.WatcherInterfaces.Observer;
+import a5_backend.Model.Watchers.WatcherInterfaces.Observer;
 
 import java.util.Iterator;
 /**
  * This interface represents a department at SFU, and contains operations for adding new courses or components,
- * listing all offerings of a course which is part of the department, and listing all sections
- *
+ * listing all offerings of a course which is part of the department, all offering of a specific course, or
+ * all components of an offering
  */
 public interface Department {
-
-    void addNewCourse(Course newCourse);
 
     void addNewComponent(ClassComponent newComponent);
 
@@ -24,9 +22,10 @@ public interface Department {
 
     void printAllCourseOfferings();
 
-    String getName();
+    String getDepartmentName();
 
     void addCourseObserver(long courseID, Observer newObserver);
 
+    //Assigns a unique ID to a department
     void setHashValue(double hashValue);
 }

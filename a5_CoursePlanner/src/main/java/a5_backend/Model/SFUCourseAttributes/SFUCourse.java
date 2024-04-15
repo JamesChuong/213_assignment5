@@ -3,19 +3,24 @@ package a5_backend.Model.SFUCourseAttributes;
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Section;
-import a5_backend.Watchers.WatcherInterfaces.Observer;
+import a5_backend.Model.Watchers.WatcherInterfaces.Observer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The SFUCourse class represents a course at SFU, it implements the Course interface
+ * and implements the methods defined there. It contains a list of sections, which correspond
+ * to offerings of that course, the department name, and catalog number.
+ */
 public class SFUCourse implements Course {
 
     private final String DEPARTMENT_NAME;
     private final String CATALOG_NUMBER;
     private final long COURSE_ID;
     private int indexOfLastSection = -1;
-    private final List<CourseSection> courseSections = new ArrayList<>(){};
+    private final List<SFUCourseSection> courseSections = new ArrayList<>(){};
     private final List<Observer> observers = new ArrayList<>(){};
 
     public SFUCourse(String departmentName, String catalogNumber, long courseID){
@@ -36,7 +41,7 @@ public class SFUCourse implements Course {
         boolean componentIsPartOfSection = courseSections.stream()
                 .anyMatch( section -> section.semester == newComponent.getSemester()
                         && section.location.equals(newComponent.getLocation()) );
-
+        //Notify observers that a new component has been added
         observers.forEach(observers -> observers.updateEvents(newComponent));
         if(componentIsPartOfSection){
             courseSections.stream()
@@ -45,8 +50,8 @@ public class SFUCourse implements Course {
                     .forEach(section -> section.addNewComponent(newComponent));
         } else{     //If the component doesn't belong to any section stored, create a new one and add it
             indexOfLastSection++;
-            courseSections.add(CourseSection.CreateNewSectionWithComponent(newComponent, indexOfLastSection));
-            courseSections.sort(new CourseSection());
+            courseSections.add(SFUCourseSection.CreateNewSectionWithComponent(newComponent, indexOfLastSection));
+            courseSections.sort(new SFUCourseSection());
         }
     }
 
@@ -57,7 +62,8 @@ public class SFUCourse implements Course {
 
     @Override
     public void printSections() {
-        for(CourseSection currentSection: courseSections){
+        for(SFUCourseSection currentSection: courseSections){
+            System.out.println(DEPARTMENT_NAME + " " + CATALOG_NUMBER);
             currentSection.printAllComponents();
         }
     }
@@ -80,8 +86,6 @@ public class SFUCourse implements Course {
                 }
             }
             throw new RuntimeException("Error: Course offering/section not found");
-
-
     }
 
     @Override

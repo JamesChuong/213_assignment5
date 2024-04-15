@@ -7,7 +7,13 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class CourseSection implements Section, Comparator<CourseSection> {
+/**
+ * The SFUCourseSection class represents an offering for a specific course, it implements
+ * the Section interface and contains the instructor(s), catalog number, department name,
+ * semester of offering, and location. It also has a list of components which represents
+ * the lecture, tutorials, labs, etc.
+ */
+public class SFUCourseSection implements Section, Comparator<SFUCourseSection> {
     private final List<ClassComponent> componentList = new ArrayList<>();
     //True if a class has other components aside from lectures, like labs, tutorials, etc.
     private boolean hasOtherComponents = false;
@@ -22,8 +28,8 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     private final int SPRING_CODE = 1;
     private final int SUMMER_CODE = 4;
 
-    public static CourseSection CreateNewSectionWithComponent(ClassComponent newComponent, long courseOfferingID){
-        CourseSection newSection = new CourseSection();
+    public static SFUCourseSection CreateNewSectionWithComponent(ClassComponent newComponent, long courseOfferingID){
+        SFUCourseSection newSection = new SFUCourseSection();
         newSection.department = newComponent.getDepartmentName();
         newSection.catalogNumber = newComponent.getCatalogNumber();
         newSection.semester = newComponent.getSemester();
@@ -79,18 +85,19 @@ public class CourseSection implements Section, Comparator<CourseSection> {
 
     @Override
     public void addNewComponent(ClassComponent newComponent) {
-        if(!newComponent.getComponentCode().equals("LEC")){
-            hasOtherComponents = true;
-            componentList.addLast(newComponent);
+        if(newComponent.getComponentCode().equals("LEC")){
+            componentList.add(newComponent);
         } else {
-            componentList.addFirst(newComponent);
+            hasOtherComponents = true;
+            componentList.add(newComponent);
         }
         addNewInstructors(newComponent.getInstructors());
     }
+
     private void addNewInstructors(List<String> instructorList) {
-        for(String instructor: instructorList){
-            if(!instructors.contains(instructor) && !instructor.isEmpty()){
-                instructors.add(instructor);
+        for (String newString : instructorList) {
+            if (!instructors.contains(newString) && !newString.isEmpty()) {
+                instructors.add(newString);
             }
         }
     }
@@ -98,7 +105,7 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     public void printAllComponents() {
 
         String componentTitle = String.format("%" + SECTION_HEADER_PADDING + "s%d in %s by %s", " ", semester
-                , location, componentList.getFirst().getInstructorsAsString());
+                , location, getInstructors());
         System.out.println(componentTitle);
             String lecEnrollmentTotals = String.format( "Type=LEC, Enrollment=%d/%d"
                     ,getTotalLecEnrollment(), getTotalLecEnrollmentCapacity());
@@ -158,7 +165,7 @@ public class CourseSection implements Section, Comparator<CourseSection> {
     }
 
     @Override
-    public int compare(CourseSection o1, CourseSection o2) {
+    public int compare(SFUCourseSection o1, SFUCourseSection o2) {
         if ( o1.getLocation().equals( o2.getLocation() ) ){
             if(o1.semester == o2.semester){
                 return o1.instructors.getFirst().compareTo(o2.instructors.getFirst());

@@ -9,7 +9,7 @@ public class ApiDepartmentDTO {
     public static ApiDepartmentDTO createApiDepartmentDTO(Department inputDepartment) {
         ApiDepartmentDTO newApiDepartmentDTO = new ApiDepartmentDTO();
         newApiDepartmentDTO.deptId = inputDepartment.hashCode();
-        newApiDepartmentDTO.name = inputDepartment.getName();
+        newApiDepartmentDTO.name = inputDepartment.getDepartmentName();
 
         return newApiDepartmentDTO;
     }

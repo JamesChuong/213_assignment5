@@ -1,4 +1,4 @@
-package a5_backend.Watchers.WatcherInterfaces;
+package a5_backend.Model.Watchers.WatcherInterfaces;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 

@@ -4,11 +4,16 @@ import a5_backend.Model.CourseInterfaces.ClassComponent;
 import a5_backend.Model.CourseInterfaces.Course;
 import a5_backend.Model.CourseInterfaces.Department;
 import a5_backend.Model.CourseInterfaces.Section;
-import a5_backend.Watchers.WatcherInterfaces.Observer;
+import a5_backend.Model.Watchers.WatcherInterfaces.Observer;
 
 import java.lang.Math;
 import java.util.*;
 
+/**
+ * The SFUDepartment class represents a department as SFU, it implements
+ * the Department interface. It contains the name of the department and
+ * the courses belonging to that department.
+ */
 public class SFUDepartment implements Department {
     private final String departmentName;
 
@@ -17,14 +22,8 @@ public class SFUDepartment implements Department {
     private double hashValue;
 
 
-
     public SFUDepartment(String departmentName) {
         this.departmentName = departmentName;
-    }
-
-    @Override
-    public void addNewCourse(Course newCourse) {
-
     }
 
     @Override
@@ -59,7 +58,6 @@ public class SFUDepartment implements Department {
         }
     }
 
-
     @Override
     public void printAllCourseOfferings() {
         Set<Long> allCourseIDs = courseList.keySet();
@@ -70,21 +68,19 @@ public class SFUDepartment implements Department {
     }
 
     @Override
-    public String getName() {
+    public String getDepartmentName() {
         return this.departmentName;
     }
 
     @Override
     public void addCourseObserver(long courseID, Observer newObserver) {
             courseList.get(courseID);
-
     }
 
     @Override
     public void setHashValue(double hashValue) {
         this.hashValue = hashValue;
     }
-
 
     //TODO: Implement this method
     @Override
@@ -96,7 +92,6 @@ public class SFUDepartment implements Department {
     @Override
     public Iterator<? extends Course> getAllCourses() {
         List<Course> sortedCourses = new ArrayList<>(courseList.values());
-
         Comparator<Course> comparator = Comparator.comparing(Course::getCatalogNumber);
         sortedCourses.sort(comparator);
         return sortedCourses.iterator();
