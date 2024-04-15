@@ -72,17 +72,17 @@ public class SFUDepartmentService {
     //Generic method for obtaining a list of course attributes (courses, sections/offerings, and components)
     //Has 2 type parameters, T and k, k represents the course attribute we want a list of, and T is the
     //corresponding DTO for attribute k.
-    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<T, k> filter
-            , Comparator<T> comparator) {
+    private <T, k> List<T> getListFromDepartment(long departmentID, CourseAttributeListBuilder<k> listBuilder
+            , DTOBuilder<T,k> DTOcreator, Comparator<T> comparator) {
         Department department = getDepartment(departmentID);
         if (department == null) {
             throw new RuntimeException("Department with ID " + departmentID + " not found.");
         }
         List<T> DTOList = new ArrayList<>();
-        Iterator<? extends k> courseAttributeIterator = filter.getDTOIterator(department);
+        Iterator<? extends k> courseAttributeIterator = listBuilder.getDTOIterator(department);
         while (courseAttributeIterator.hasNext()) {
             k currentObject = courseAttributeIterator.next();
-            T dto = filter.createDTO(currentObject);
+            T dto = DTOcreator.createDTO(currentObject);
             DTOList.add(dto);
         }
         DTOList.sort(comparator);
@@ -90,60 +90,32 @@ public class SFUDepartmentService {
     }
 
     public List<ApiCourseDTO> getDepartmentCourses(long departmentID){
-        CourseAttributeListBuilder<ApiCourseDTO, Course> CourseDTOFilter = new CourseAttributeListBuilder<>() {
-            @Override
-            public Iterator<? extends Course> getDTOIterator(Department newDepartment) {
-                return newDepartment.getAllCourses();
-            }
-            @Override
-            public ApiCourseDTO createDTO(Course newCourseAttribute) {
-                return ApiCourseDTO.createNewCourseDTO(newCourseAttribute);
-            }
-        };
-
+        CourseAttributeListBuilder<Course> courseList = newDepartment -> newDepartment.getAllCourses();
+        DTOBuilder<ApiCourseDTO, Course> courseDTOBuilder
+                = newCourseAttribute -> ApiCourseDTO.createNewCourseDTO(newCourseAttribute);
         Comparator<ApiCourseDTO> comparator = Comparator.comparing(ApiCourseDTO::getCatalogNumber);
-        return getListFromDepartment(departmentID, CourseDTOFilter, comparator);
+        return getListFromDepartment(departmentID, courseList, courseDTOBuilder, comparator);
     }
 
     public List<ApiOfferingSectionDTO> getCourseOfferingComponents(long departmentID
             , long courseID, long courseOfferingID){
-        CourseAttributeListBuilder<ApiOfferingSectionDTO, ClassComponent> componentList = new CourseAttributeListBuilder<>() {
-            @Override
-            public Iterator<? extends ClassComponent> getDTOIterator(Department newDepartment) {
-                Iterator<? extends ClassComponent> courseOfferingIterator =
-                        newDepartment.getAllCourseOfferingSections(courseID, courseOfferingID);
-                return courseOfferingIterator;
-            }
-
-            @Override
-            public ApiOfferingSectionDTO createDTO(ClassComponent newCourseAttribute) {
-                return ApiOfferingSectionDTO.createSectionDTO(newCourseAttribute);
-            }
-        };
-
+        CourseAttributeListBuilder<ClassComponent> componentList
+                = newDepartment -> newDepartment.getAllCourseOfferingSections(courseID, courseOfferingID);
+        DTOBuilder<ApiOfferingSectionDTO, ClassComponent> sectionDTOBuilder
+                = newCourseAttribute -> ApiOfferingSectionDTO.createSectionDTO(newCourseAttribute);
         Comparator<ApiOfferingSectionDTO> comparator = Comparator.comparing(ApiOfferingSectionDTO::getType);
-        return getListFromDepartment(departmentID, componentList, comparator);
+        return getListFromDepartment(departmentID, componentList, sectionDTOBuilder, comparator);
     }
 
     public List<ApiCourseOfferingDTO> getAllCourseOfferings( long departmentID
             ,  long courseID){
-        CourseAttributeListBuilder<ApiCourseOfferingDTO, Section> courseOfferingList =
-                new CourseAttributeListBuilder<>() {
-                    @Override
-                    public Iterator<? extends Section> getDTOIterator(Department newDepartment) {
-                        Iterator<? extends Section> allCourseOfferings = newDepartment.getAllCourseOfferings(courseID);
-                        return allCourseOfferings;
-                    }
+        CourseAttributeListBuilder<Section> courseOfferingList
+                = newDepartment -> newDepartment.getAllCourseOfferings(courseID);
+        DTOBuilder<ApiCourseOfferingDTO, Section> offeringDTOBuilder
+                = newCourseAttribute -> ApiCourseOfferingDTO.createNewOfferingDTO(newCourseAttribute);
 
-                    @Override
-                    public ApiCourseOfferingDTO createDTO(Section newCourseAttribute) {
-                        return ApiCourseOfferingDTO.createNewOfferingDTO(newCourseAttribute);
-                    }
-                };
         Comparator<ApiCourseOfferingDTO> comparator = Comparator.comparing(ApiCourseOfferingDTO::getSemesterCode);
-        return getListFromDepartment(departmentID, courseOfferingList, comparator);
+        return getListFromDepartment(departmentID, courseOfferingList, offeringDTOBuilder, comparator);
     }
-
-
 
 }

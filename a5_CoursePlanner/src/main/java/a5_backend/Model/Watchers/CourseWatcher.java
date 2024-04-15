@@ -20,7 +20,7 @@ public class CourseWatcher implements Watcher {
     private long departmentID;
     private long courseID;
     //Stores all events which happen
-    private List<String> allChanges = new ArrayList<>();
+    private final List<String> allChanges = new ArrayList<>();
     private final int SPRING_CODE = 1;
     private final int SUMMER_CODE = 4;
 
@@ -34,11 +34,11 @@ public class CourseWatcher implements Watcher {
             // "now" gets the current timezone and .format applies the specified time format
             ZonedDateTime now = ZonedDateTime.now();
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy");
-
             latestEvent = String.format("%s: Added section %s with enrollment (%d/%d) to offering "
                     , now.format(dateFormatter), newComponent.getComponentCode()
                     , newComponent.getEnrollmentTotal(), newComponent.getCapacity());
             semesterOfChangedEvent = newComponent.getSemester();
+            allChanges.add(latestEvent + getTerm(semesterOfChangedEvent) + " " + getYear(semesterOfChangedEvent) );
         }
         @Override
         public String getLatestEvent() {
@@ -60,13 +60,7 @@ public class CourseWatcher implements Watcher {
 
     @Override
     public List<String> getListOfChanges() {
-        if(!courseObserver.getLatestEvent().isEmpty()){
-            String completedEvent = courseObserver.getLatestEvent();
-            int semesterOfLatestEvent = courseObserver.getSemesterOfLatestEvent();
-            completedEvent += getTerm(semesterOfLatestEvent) + " " + getYear(semesterOfLatestEvent);
-            allChanges.add(completedEvent);
-            allChanges = allChanges.stream().distinct().collect(Collectors.toList());
-        }
+
         return allChanges;
     }
 
