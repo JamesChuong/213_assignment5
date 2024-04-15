@@ -16,6 +16,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The WatcherController class manages watchers.It interacts with the SFUDepartmentService to facilitate
+ * operations related to watchers, which monitor changes to course and department data.
+ *
+ * It provides endpoints for creating, listing, and deleting watchers, as well as retrieving events
+ * observed by each watcher. This controller handles the interaction between the HTTP requests and
+ * the server encapsulated in the SFUDepartmentService, ensuring that watchers are
+ * properly managed according to the requests received.
+ *
+ * When a new watcher is created via a POST request, it registers the watcher with the corresponding course
+ * and department. The GET methods retrieve either a list of all watchers with their associated events or
+ * the specific events for a watcher. Deleting a watcher is done by DELETE request.
+ */
 @RestController
 public class WatcherController {
 
