@@ -46,7 +46,6 @@ public class SFUDepartmentController {
     @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
         this.DEPARTMENT_MANAGER = sfuDepartmentService;
-        //this.SFUDepartmentController = SFUDepartmentController;
     }
 
     @GetMapping("/api/departments")

@@ -41,13 +41,6 @@ public class WatcherController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    static class RequestNotFound extends RuntimeException {
-        public RequestNotFound(String ErrorMsg){
-            super(ErrorMsg);
-        }
-    }
-
     @Autowired
     public WatcherController(SFUDepartmentService SFUDepartmentService) {
         this.DEPARTMENT_MANAGER = SFUDepartmentService;
