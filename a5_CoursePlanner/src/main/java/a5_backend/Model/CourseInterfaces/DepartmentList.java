@@ -25,6 +25,6 @@ public interface DepartmentList {
 
     void addNewObserver(long departmentID, long courseID, Observer newObserver);
 
-
+    // Parse a DTO
     void parseApiOfferingDataDTO(ApiOfferingDataDTO dto);
 }

@@ -93,6 +93,7 @@ public class SFUDepartmentList implements DepartmentList {
         return instructors;
     }
 
+    // Parse a DTO
     @Override
     public void parseApiOfferingDataDTO(ApiOfferingDataDTO dto){
         String semester = dto.semester;
