@@ -35,7 +35,6 @@ public class SFUDepartmentList implements DepartmentList {
 
     @Override
     public void loadCSVFile(String CSVFile) {
-        //NOTE: I don't think we need the CSVReader/Printer interfaces
         try{
             File openedFile = new File(CSVFile);
             Scanner CSVReader = new Scanner(openedFile);
@@ -104,9 +103,7 @@ public class SFUDepartmentList implements DepartmentList {
         int enrollmentCapacity = dto.enrollmentCap;
         int enrollmentTotal = dto.enrollmentTotal;
         String instructorLine = dto.instructor;
-        Scanner lineScanner = new Scanner(instructorLine);
-        //lineScanner.useDelimiter(",");
-        //List<String> instructors = parseInstructors(instructorLine, lineScanner);
+
         List<String> instructors = new ArrayList<>();
         if (instructorLine.equals("<null>")) {
             instructors.add("");
