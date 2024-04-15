@@ -28,20 +28,12 @@ public class SFUDepartmentController {
 
     private final SFUDepartmentService DEPARTMENT_MANAGER;
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    static class BadRequest extends RuntimeException {
-        public BadRequest(String ErrorMsg){
-            super(ErrorMsg);
-        }
-    }
-
     @ResponseStatus(HttpStatus.NOT_FOUND)
     static class RequestNotFound extends RuntimeException {
         public RequestNotFound(String ErrorMsg){
             super(ErrorMsg);
         }
     }
-
 
     @Autowired
     public SFUDepartmentController(SFUDepartmentService sfuDepartmentService) {
