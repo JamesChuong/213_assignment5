@@ -13,11 +13,20 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The SFUDepartmentController class handles HTTP requests concerning departments,
+ * courses, and offerings. It handles interactions between the web client and the service,
+ * ensuring that data regarding courses are correctly managed and communicated.
+ *
+ * Upon receiving API requests, this controller delegates tasks to the SFUDepartmentService.
+ * It handles all department-related API endpoints, converting data fetched from the service
+ * layer into appropriate Data Transfer Objects (DTOs) that are
+ * then sent back to the client. It also performs error handling to HTTP responses
+ */
 @RestController
 public class SFUDepartmentController {
 
     private final SFUDepartmentService DEPARTMENT_MANAGER;
-    //private final a5_backend.Controllers.SFUDepartmentController SFUDepartmentController;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     static class BadRequest extends RuntimeException {
