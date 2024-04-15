@@ -35,15 +35,13 @@ public class SFUCourse implements Course {
         //Check if the component belongs to any section stored
         boolean componentIsPartOfSection = courseSections.stream()
                 .anyMatch( section -> section.semester == newComponent.getSemester()
-                        && section.location.equals(newComponent.getLocation())
-                        && section.instructors.equals(newComponent.getInstructors()) );
+                        && section.location.equals(newComponent.getLocation()) );
 
         observers.forEach(observers -> observers.updateEvents(newComponent));
         if(componentIsPartOfSection){
             courseSections.stream()
                     .filter( section -> section.semester == newComponent.getSemester()
-                            && section.location.equals(newComponent.getLocation())
-                            && section.instructors.equals(newComponent.getInstructors()) )
+                            && section.location.equals(newComponent.getLocation()) )
                     .forEach(section -> section.addNewComponent(newComponent));
         } else{     //If the component doesn't belong to any section stored, create a new one and add it
             indexOfLastSection++;
@@ -59,7 +57,6 @@ public class SFUCourse implements Course {
 
     @Override
     public void printSections() {
-        System.out.println(DEPARTMENT_NAME + " " + CATALOG_NUMBER);
         for(CourseSection currentSection: courseSections){
             currentSection.printAllComponents();
         }

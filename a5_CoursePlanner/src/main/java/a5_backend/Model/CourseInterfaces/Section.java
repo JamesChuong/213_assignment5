@@ -1,6 +1,7 @@
 package a5_backend.Model.CourseInterfaces;
 
 import java.util.Iterator;
+import java.util.List;
 
 public interface Section {
 

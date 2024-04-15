@@ -85,8 +85,15 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         } else {
             componentList.addFirst(newComponent);
         }
+        addNewInstructors(newComponent.getInstructors());
     }
-
+    private void addNewInstructors(List<String> instructorList) {
+        for(String instructor: instructorList){
+            if(!instructors.contains(instructor) && !instructor.isEmpty()){
+                instructors.add(instructor);
+            }
+        }
+    }
     @Override
     public void printAllComponents() {
 
@@ -139,13 +146,12 @@ public class CourseSection implements Section, Comparator<CourseSection> {
         return year;
     }
 
+
+
     @Override
     public Iterator<? extends ClassComponent> getAllComponents() {
         Comparator<ClassComponent> comparator = Comparator.comparing(ClassComponent::getComponentCode)
                 .thenComparing(ClassComponent::getEnrollmentTotal);
-        for(ClassComponent component: componentList){
-            System.out.println(component.getInstructors());
-        }
         List<ClassComponent> sortedComponents = new ArrayList<>(componentList);
         sortedComponents.sort(comparator);
         return sortedComponents.iterator();
