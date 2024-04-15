@@ -2,6 +2,10 @@ package a5_backend.DTOs;
 
 import a5_backend.Model.CourseInterfaces.ClassComponent;
 
+/**
+ * The ApiOfferingSectionDTO class encapsulates type, enrollment capacity, and total enrollment variables
+ * It has a method to create instances of itself from ClassComponent objects
+ */
 public class ApiOfferingSectionDTO {
     public String type;
     public int enrollmentCap;

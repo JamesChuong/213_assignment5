@@ -2,6 +2,10 @@ package a5_backend.DTOs;
 
 import a5_backend.Model.CourseInterfaces.Section;
 
+/**
+ * The ApiCourseOfferingDTO class includes the offering's ID, location, instructor list, term, semester code,
+ * and year. This DTO is primarily used to convey course offering details from the server to the HTTP client.
+ */
 public class ApiCourseOfferingDTO {
     public long courseOfferingId;
     public String location;

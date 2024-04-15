@@ -1,6 +1,11 @@
 package a5_backend.DTOs;
 import java.util.List;
 
+/**
+ * The ApiWatcherDTO class encapsulates details of a course watcher including its identifier,
+ * associated department, and course information. It also lists all events observed by the watcher
+ * This class is used to transfer watcher data to the client
+ */
 public class ApiWatcherDTO {
     public long id;
     public ApiDepartmentDTO department;
